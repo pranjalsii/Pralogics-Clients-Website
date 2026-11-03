@@ -156,26 +156,26 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
   };
 
   return (
-    <div className="py-10 md:py-16 px-4 sm:px-6 lg:px-10 space-y-24">
+    <div className="py-6 sm:py-10 md:py-16 px-3.5 sm:px-6 lg:px-10 space-y-16 sm:space-y-24">
       
       {/* SECTION 1: MINIMALIST LOOKBOOK GALLERY */}
-      <section id="gallery-section" className="max-w-7xl mx-auto space-y-10 scroll-mt-28">
-        <div className="reveal-stagger-1 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#EAE0D9] pb-8">
-          <div className="space-y-2.5 max-w-2xl">
-            <span className="text-[11px] uppercase tracking-[0.22em] text-[#8E3046] font-bold block">
+      <section id="gallery-section" className="max-w-7xl mx-auto space-y-7 sm:space-y-10 scroll-mt-28">
+        <div className="reveal-stagger-1 flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6 border-b border-[#EAE0D9] pb-6 sm:pb-8">
+          <div className="space-y-2 max-w-2xl">
+            <span className="text-[10.5px] sm:text-[11px] uppercase tracking-[0.22em] text-[#8E3046] font-bold block">
               SALON SANCTUARY &amp; LOOKBOOK
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-medium text-[#161314]">
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#161314]">
               The Slender Lookbook
             </h1>
           </div>
-          <p className="text-[#5C5055] text-sm sm:text-[15px] leading-relaxed max-w-md">
+          <p className="text-[#5C5055] text-xs sm:text-[15px] leading-relaxed max-w-md">
             Explore our Bur Dubai ladies sanctuary alongside our signature hair styling, Dr. Renaud facials, nail extensions, and spa rituals.
           </p>
         </div>
 
-        {/* Lookbook Category Filter Tabs */}
-        <div className="reveal-stagger-2 flex flex-wrap items-center gap-2">
+        {/* Lookbook Category Filter Tabs (Single-row scroll on mobile) */}
+        <div className="reveal-stagger-2 flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap">
           {[
             { id: 'all', label: 'All Moments (8)' },
             { id: 'hair', label: 'Hair Studio' },
@@ -186,7 +186,7 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
             <button
               key={tab.id}
               onClick={() => setGalleryFilter(tab.id)}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                 galleryFilter === tab.id
                   ? 'bg-[#161314] text-white'
                   : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
@@ -197,36 +197,36 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
           ))}
         </div>
 
-        {/* 4-Column Minimalist Gallery Grid (Zero scroll-jank observers) */}
-        <div className="reveal-stagger-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* 2-Column Mobile / 4-Column Desktop Lookbook Grid */}
+        <div className="reveal-stagger-3 grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
           {filteredGallery.map((item) => (
             <figure
               key={item.id}
               onClick={() => setActiveLightboxItem(item)}
-              className="group rounded-3xl glass-card-2026 overflow-hidden cursor-pointer flex flex-col justify-between"
+              className="group rounded-2xl sm:rounded-3xl glass-card-2026 overflow-hidden cursor-pointer flex flex-col justify-between"
             >
               <div className="relative aspect-[4/4.2] overflow-hidden bg-[#EFE6E0]">
                 <SafeImage
                   src={item.image}
                   alt={item.title}
                   category={item.category as any}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute top-3.5 right-3.5">
-                  <span className="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-[#161314] group-hover:bg-[#8E3046] group-hover:text-white transition-colors shrink-0">
-                    <ArrowUpRight className="w-4 h-4" />
+                <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 flex items-center justify-center text-[#161314] group-hover:bg-[#8E3046] group-hover:text-white transition-colors shrink-0">
+                    <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </span>
                 </div>
               </div>
 
-              <figcaption className="p-5 space-y-1.5">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-[#8E3046] font-bold block">
+              <figcaption className="p-3.5 sm:p-5 space-y-1 sm:space-y-1.5 flex-grow">
+                <span className="text-[9.5px] sm:text-[10px] uppercase tracking-[0.16em] sm:tracking-[0.18em] text-[#8E3046] font-bold block">
                   {item.category}
                 </span>
-                <h4 className="font-serif text-xl font-medium text-[#161314] group-hover:text-[#8E3046] transition-colors">
+                <h4 className="font-serif text-base sm:text-xl font-medium text-[#161314] group-hover:text-[#8E3046] transition-colors leading-snug line-clamp-1">
                   {item.title}
                 </h4>
-                <p className="text-xs text-[#5C5055] line-clamp-2 leading-relaxed">
+                <p className="text-[11px] sm:text-xs text-[#5C5055] line-clamp-2 leading-relaxed">
                   {item.description}
                 </p>
               </figcaption>

@@ -15,7 +15,11 @@ import {
   TESTIMONIALS,
   GALLERY_ITEMS,
   SEO_METADATA,
-  generateLocalBusinessSchema
+  generateLocalBusinessSchema,
+  filterTestimonials,
+  getNextTestimonialIndex,
+  getPrevTestimonialIndex,
+  getClientInitials
 } from './booking';
 
 test('formatPrice formats AED currency correctly', () => {
@@ -246,5 +250,24 @@ test('generateLocalBusinessSchema produces valid Schema.org LocalBusiness JSON-L
   assert.equal(schema.hasOfferCatalog.itemListElement.length, SALON_SERVICES.length);
 });
 
+test('testimonial carousel helpers filter by experience type and wrap navigation indices cleanly', () => {
+  const all = filterTestimonials('all');
+  const salonOnly = filterTestimonials('salon');
+  const homeOnly = filterTestimonials('home');
 
+  assert.equal(all.length, TESTIMONIALS.length);
+  assert.ok(salonOnly.length >= 2);
+  assert.ok(homeOnly.length >= 4);
+  assert.equal(salonOnly.length + homeOnly.length, all.length);
+  assert.ok(salonOnly.every((item) => item.type === 'salon'));
+  assert.ok(homeOnly.every((item) => item.type === 'home'));
+
+  assert.equal(getNextTestimonialIndex(0, 6), 1);
+  assert.equal(getNextTestimonialIndex(5, 6), 0);
+  assert.equal(getPrevTestimonialIndex(0, 6), 5);
+  assert.equal(getPrevTestimonialIndex(3, 6), 2);
+
+  assert.equal(getClientInitials('Taradevi B.'), 'TB');
+  assert.equal(getClientInitials('Pooja Mehta'), 'PM');
+});
 

@@ -37,21 +37,21 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onSelectServiceAndBo
   ];
 
   return (
-    <section className="py-10 md:py-16 px-4 sm:px-6 lg:px-10">
-      <div className="max-w-7xl mx-auto space-y-14">
+    <section className="py-6 sm:py-10 md:py-16 px-3.5 sm:px-6 lg:px-10">
+      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-14">
         
         {/* Minimalist Editorial Header with Entrance Reveal */}
-        <div className="reveal-stagger-1 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#EAE0D9] pb-8">
-          <div className="space-y-2.5 max-w-2xl">
-            <span className="text-[11px] uppercase tracking-[0.22em] text-[#8E3046] font-bold block">
+        <div className="reveal-stagger-1 flex flex-col lg:flex-row lg:items-end justify-between gap-4 sm:gap-6 border-b border-[#EAE0D9] pb-6 sm:pb-8">
+          <div className="space-y-2 max-w-2xl">
+            <span className="text-[10.5px] sm:text-[11px] uppercase tracking-[0.22em] text-[#8E3046] font-bold block">
               OFFICIAL FRESHA &amp; SALON MENU
             </span>
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-medium text-[#161314] leading-[1.06]">
+            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-medium text-[#161314] leading-[1.08]">
               Verified Services &amp; AED Price List
             </h1>
           </div>
           <div className="space-y-2 max-w-md">
-            <p className="text-[#5C5055] text-sm sm:text-[15px] leading-relaxed">
+            <p className="text-[#5C5055] text-xs sm:text-[15px] leading-relaxed">
               100% verified pricing from our Bur Dubai salon (Shop No. 6, Majed Bin Sultan Bldg) and official Fresha profile. Available In-Salon or via VIP Home Service across Dubai.
             </p>
             <a
@@ -66,14 +66,14 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onSelectServiceAndBo
           </div>
         </div>
 
-        {/* Category Filter Bar + Search Input */}
-        <div className="reveal-stagger-2 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-2">
+        {/* Category Filter Bar + Search Input (Single-line horizontal scroll on mobile) */}
+        <div className="reveal-stagger-2 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3.5 sm:gap-4">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 sm:flex-wrap">
             {categories.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setSelectedCategory(tab.id)}
-                className={`px-4 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
+                className={`px-4 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                   selectedCategory === tab.id
                     ? 'bg-[#161314] text-white'
                     : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314] hover:border-[#8E3046]'
@@ -98,7 +98,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onSelectServiceAndBo
         </div>
 
         {/* 3-Column Minimalist Luxury Service Grid (Zero scroll-jank observers) */}
-        <div className="reveal-stagger-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+        <div className="reveal-stagger-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-7">
           {filteredServices.map((service) => (
             <article
               key={service.id}

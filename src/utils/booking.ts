@@ -883,5 +883,32 @@ export function generateLocalBusinessSchema(siteUrl: string = 'https://slenderla
   };
 }
 
+export type TestimonialFilterType = 'all' | 'salon' | 'home';
 
+export function filterTestimonials(
+  filter: TestimonialFilterType,
+  items: TestimonialItem[] = TESTIMONIALS
+): TestimonialItem[] {
+  if (filter === 'all') return items;
+  return items.filter((item) => item.type === filter);
+}
 
+export function getNextTestimonialIndex(currentIndex: number, total: number): number {
+  if (total <= 0) return 0;
+  return (currentIndex + 1) % total;
+}
+
+export function getPrevTestimonialIndex(currentIndex: number, total: number): number {
+  if (total <= 0) return 0;
+  return currentIndex <= 0 ? total - 1 : currentIndex - 1;
+}
+
+export function getClientInitials(name: string): string {
+  return name
+    .trim()
+    .split(/\s+/)
+    .map((part) => part.replace(/[^A-Za-z]/g, '')[0] || '')
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+}

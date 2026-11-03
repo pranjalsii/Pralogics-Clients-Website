@@ -24,8 +24,8 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="bg-[#1D0D13] text-white mt-12 pt-14 pb-10 px-4 sm:px-6 lg:px-10 border-t border-white/10">
-      <div className="max-w-7xl mx-auto space-y-10">
+    <footer className="bg-[#1D0D13] text-white mt-10 sm:mt-12 pt-12 sm:pt-14 pb-20 sm:pb-12 px-4 sm:px-6 lg:px-10 border-t border-white/10">
+      <div className="max-w-7xl mx-auto space-y-9 sm:space-y-10">
         
         {/* Clean, Minimal 4-Column High-Trust Footer */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10">
@@ -49,25 +49,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </p>
 
             {/* Compact Verified Trust Badges */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-1">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 pt-1">
               <a
                 href={SALON_INFO.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3.5 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 transition inline-flex items-center gap-2 text-xs"
+                className="px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 transition inline-flex items-center justify-center gap-1.5 text-xs"
               >
-                <Star className="w-3.5 h-3.5 fill-[#FBBF24] text-[#FBBF24]" />
-                <span className="font-semibold text-white editorial-num">{SALON_INFO.rating} Google ({SALON_INFO.reviewsCount}+)</span>
+                <Star className="w-3.5 h-3.5 fill-[#FBBF24] text-[#FBBF24] shrink-0" />
+                <span className="font-semibold text-white editorial-num truncate">{SALON_INFO.rating} Google ({SALON_INFO.reviewsCount}+)</span>
               </a>
 
               <a
                 href={SALON_INFO.freshaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3.5 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 transition inline-flex items-center gap-2 text-xs"
+                className="px-3 py-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 transition inline-flex items-center justify-center gap-1.5 text-xs"
               >
-                <Star className="w-3.5 h-3.5 fill-[#F3B8C4] text-[#F3B8C4]" />
-                <span className="font-semibold text-white editorial-num">5.0★ Fresha Partner</span>
+                <Star className="w-3.5 h-3.5 fill-[#F3B8C4] text-[#F3B8C4] shrink-0" />
+                <span className="font-semibold text-white editorial-num truncate">5.0★ Fresha Partner</span>
               </a>
             </div>
           </div>
@@ -77,7 +77,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <h4 className="text-xs uppercase tracking-[0.18em] font-bold text-[#F3B8C4]">
               Quick Links
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-[13px] text-white/75">
+            <ul className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-2.5 text-xs sm:text-[13px] text-white/75">
               <li>
                 <button
                   onClick={() => onNavigate('home')}
@@ -180,7 +180,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         {/* Clean Bottom Bar with Copyright & Social Icons */}
-        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/55">
+        <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left text-xs text-white/55">
           <p>© {new Date().getFullYear()} Slender Ladies Salon | Salon &amp; Home Service Dubai. All rights reserved.</p>
           
           <div className="flex items-center gap-3">

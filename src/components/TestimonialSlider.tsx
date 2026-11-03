@@ -4,32 +4,42 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
+import {
+  ChevronLeft,
+  ChevronRight,
   Pause,
   Play,
   ArrowUpRight,
   Star,
-  Quote
+  CheckCircle2
 } from 'lucide-react';
-import { TESTIMONIALS, TestimonialItem, SALON_INFO } from '../utils/booking';
-import { SafeImage } from './SafeImage';
+import {
+  TESTIMONIALS,
+  TestimonialItem,
+  TestimonialFilterType,
+  SALON_INFO,
+  SALON_SERVICES,
+  formatPrice,
+  filterTestimonials,
+  getNextTestimonialIndex,
+  getPrevTestimonialIndex,
+  getClientInitials
+} from '../utils/booking';
 
 interface TestimonialSliderProps {
   onBookService?: (serviceName?: string) => void;
 }
 
 export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ onBookService }) => {
-  const [activeFilter, setActiveFilter] = useState<'all' | 'salon' | 'home'>('all');
+  const [activeFilter, setActiveFilter] = useState<TestimonialFilterType>('all');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
 
-  const filteredTestimonials: TestimonialItem[] = TESTIMONIALS.filter(item => {
-    if (activeFilter === 'all') return true;
-    return item.type === activeFilter;
-  });
+  const filteredTestimonials: TestimonialItem[] = filterTestimonials(activeFilter, TESTIMONIALS);
+  const salonCount = filterTestimonials('salon', TESTIMONIALS).length;
+  const homeCount = filterTestimonials('home', TESTIMONIALS).length;
 
   useEffect(() => {
     if (currentIndex >= filteredTestimonials.length) {
@@ -41,8 +51,8 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ onBookServ
     if (isPaused || filteredTestimonials.length <= 1) return;
 
     autoPlayRef.current = setInterval(() => {
-      setCurrentIndex(prev => (prev + 1) % filteredTestimonials.length);
-    }, 6000);
+      setCurrentIndex((prev) => getNextTestimonialIndex(prev, filteredTestimonials.length));
+    }, 6500);
 
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
@@ -50,276 +60,348 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ onBookServ
   }, [isPaused, filteredTestimonials.length]);
 
   const handlePrev = () => {
-    setCurrentIndex(prev => (prev === 0 ? filteredTestimonials.length - 1 : prev - 1));
+    setCurrentIndex((prev) => getPrevTestimonialIndex(prev, filteredTestimonials.length));
   };
 
   const handleNext = () => {
-    setCurrentIndex(prev => (prev + 1) % filteredTestimonials.length);
+    setCurrentIndex((prev) => getNextTestimonialIndex(prev, filteredTestimonials.length));
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      handlePrev();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      handleNext();
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartXRef.current === null) return;
+    const touchEndX = e.changedTouches[0]?.clientX ?? touchStartXRef.current;
+    const deltaX = touchStartXRef.current - touchEndX;
+    if (Math.abs(deltaX) > 40) {
+      if (deltaX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartXRef.current = null;
   };
 
   const current = filteredTestimonials[currentIndex] || filteredTestimonials[0];
+  const matchedService = current
+    ? SALON_SERVICES.find((s) => s.name === current.serviceUsed)
+    : undefined;
 
   return (
-    <section 
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-10"
+    <section
+      className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-10 space-y-5 sm:space-y-8 scroll-mt-24 focus:outline-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
       aria-label="Client Testimonials Carousel"
+      data-testid="testimonial-carousel-section"
     >
-      {/* Minimalist Editorial Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#EAE0D9] pb-6">
-        <div className="space-y-2 max-w-2xl">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-[#8E3046] font-bold block">
-            04 · VERIFIED CLIENT STORIES
+      {/* Minimal High-End Editorial Header */}
+      <div className="flex flex-col items-center text-center space-y-2 sm:space-y-3">
+        <div className="flex items-center justify-center gap-3 sm:gap-5">
+          <span className="w-8 sm:w-16 h-[1.5px] bg-gradient-to-r from-transparent to-[#8E3046]" />
+          <span className="text-[10.5px] sm:text-[11px] uppercase tracking-[0.24em] text-[#8E3046] font-semibold">
+            Verified Client Reflections
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-medium text-[#161314]">
-            Loved by Women Across Dubai
-          </h2>
+          <span className="w-8 sm:w-16 h-[1.5px] bg-gradient-to-l from-transparent to-[#8E3046]" />
         </div>
 
-        <a
-          href={SALON_INFO.googleMapsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex items-center gap-4 text-xs self-start md:self-auto"
-        >
-          <div className="pr-4 border-r border-[#E6DCD5] text-right">
-            <span className="font-serif text-2xl font-semibold text-[#161314] block leading-none editorial-num">
-              {SALON_INFO.rating} ★
-            </span>
-          </div>
-          <div>
-            <p className="font-semibold text-[#161314] uppercase tracking-wider editorial-num">
-              {SALON_INFO.reviewsCount}+ Google Reviews
-            </p>
-            <p className="text-[11px] text-[#5C5055] mt-0.5">
-              5.0 ★ on Fresha Dubai
-            </p>
-          </div>
-          <ArrowUpRight className="w-4 h-4 text-[#8E3046] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
+        <h2 className="font-serif text-3xl sm:text-5xl font-medium text-[#161314] tracking-[-0.015em] leading-[1.1]">
+          Words from Our Dubai Patrons
+        </h2>
+
+        {/* Unboxed Credibility Strip (Zero-Pill Discipline) */}
+        <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-xs sm:text-[13px] text-[#5C5055] pt-0.5 editorial-num">
+          <a
+            href={SALON_INFO.googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-[#161314] hover:text-[#8E3046] transition-colors inline-flex items-center gap-1"
+          >
+            <span className="text-[#C88A2B]">★</span>
+            <span>{SALON_INFO.rating} Google Rating ({SALON_INFO.reviewsCount}+ Reviews)</span>
+          </a>
+          <span className="text-[#C9A99A]" aria-hidden="true">·</span>
+          <a
+            href={SALON_INFO.freshaVenueUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-[#8E3046] hover:underline transition-colors inline-flex items-center gap-1"
+          >
+            <span>5.0 ★ Rated on Fresha Dubai</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </a>
+          <span className="hidden sm:inline text-[#C9A99A]" aria-hidden="true">·</span>
+          <span className="hidden sm:inline text-[#5C5055]">
+            Bur Dubai Sanctuary &amp; VIP Home Service
+          </span>
+        </div>
       </div>
 
-      {/* Filter Tabs & Carousel Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        
-        <div className="flex flex-wrap items-center gap-2" role="tablist">
+      {/* Minimal Filter Bar & Carousel Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#EAE0D9] pb-3.5 sm:pb-4">
+        {/* Experience Filter Tabs — Full fit on 390px mobile */}
+        <div
+          className="grid grid-cols-3 sm:flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto"
+          role="tablist"
+          aria-label="Filter client testimonials by experience"
+        >
           <button
-            onClick={() => setActiveFilter('all')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer editorial-num ${
+            type="button"
+            role="tab"
+            aria-selected={activeFilter === 'all'}
+            onClick={() => {
+              setActiveFilter('all');
+              setCurrentIndex(0);
+            }}
+            className={`min-h-[40px] px-2.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-semibold transition-all cursor-pointer whitespace-nowrap text-center editorial-num ${
               activeFilter === 'all'
-                ? 'bg-[#161314] text-white'
-                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
+                ? 'bg-[#161314] text-white shadow-2xs'
+                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:border-[#161314] hover:text-[#161314]'
             }`}
           >
             All Reviews ({TESTIMONIALS.length})
           </button>
 
           <button
-            onClick={() => setActiveFilter('salon')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+            type="button"
+            role="tab"
+            aria-selected={activeFilter === 'salon'}
+            onClick={() => {
+              setActiveFilter('salon');
+              setCurrentIndex(0);
+            }}
+            className={`min-h-[40px] px-2.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-semibold transition-all cursor-pointer whitespace-nowrap text-center editorial-num ${
               activeFilter === 'salon'
-                ? 'bg-[#161314] text-white'
-                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
+                ? 'bg-[#161314] text-white shadow-2xs'
+                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:border-[#161314] hover:text-[#161314]'
             }`}
           >
-            Bur Dubai Salon
+            Bur Dubai ({salonCount})
           </button>
 
           <button
-            onClick={() => setActiveFilter('home')}
-            className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
+            type="button"
+            role="tab"
+            aria-selected={activeFilter === 'home'}
+            onClick={() => {
+              setActiveFilter('home');
+              setCurrentIndex(0);
+            }}
+            className={`min-h-[40px] px-2.5 sm:px-4 py-2 rounded-full text-[11px] sm:text-xs font-semibold transition-all cursor-pointer whitespace-nowrap text-center editorial-num ${
               activeFilter === 'home'
-                ? 'bg-[#161314] text-white'
-                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
+                ? 'bg-[#161314] text-white shadow-2xs'
+                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:border-[#161314] hover:text-[#161314]'
             }`}
           >
-            VIP Home Service
+            Home Service ({homeCount})
           </button>
         </div>
 
-        {/* Navigation Controls */}
-        <div className="flex items-center gap-2 self-end sm:self-auto">
-          <button
-            onClick={() => setIsPaused(!isPaused)}
-            className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#5C5055] hover:text-[#8E3046] hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
-            title={isPaused ? "Resume auto-slide" : "Pause auto-slide"}
-            aria-label={isPaused ? "Resume auto-slide" : "Pause auto-slide"}
-          >
-            {isPaused ? <Play className="w-3.5 h-3.5 fill-current" /> : <Pause className="w-3.5 h-3.5" />}
-          </button>
+        {/* Minimalist Carousel Controls */}
+        <div className="flex items-center justify-between sm:justify-end gap-2.5">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setIsPaused(!isPaused)}
+              className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#5C5055] hover:text-[#8E3046] hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
+              title={isPaused ? 'Resume auto-slide' : 'Pause auto-slide'}
+              aria-label={isPaused ? 'Resume auto-slide' : 'Pause auto-slide'}
+            >
+              {isPaused ? <Play className="w-3.5 h-3.5 fill-current" /> : <Pause className="w-3.5 h-3.5" />}
+            </button>
 
-          <span className="text-xs font-semibold text-[#5C5055] tracking-widest px-2 editorial-num">
-            {String(currentIndex + 1).padStart(2, '0')} / {String(filteredTestimonials.length).padStart(2, '0')}
-          </span>
+            <span
+              className="text-xs font-semibold text-[#5C5055] tracking-[0.18em] px-2 editorial-num"
+              aria-live="polite"
+            >
+              {String(currentIndex + 1).padStart(2, '0')} / {String(filteredTestimonials.length).padStart(2, '0')}
+            </span>
+          </div>
 
-          <button
-            onClick={handlePrev}
-            className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#161314] hover:bg-[#8E3046] hover:text-white hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
-            aria-label="Previous testimonial"
-            title="Previous testimonial"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#161314] hover:bg-[#8E3046] hover:text-white hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
+              aria-label="Previous testimonial"
+              title="Previous testimonial"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
 
-          <button
-            onClick={handleNext}
-            className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#161314] hover:bg-[#8E3046] hover:text-white hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
-            aria-label="Next testimonial"
-            title="Next testimonial"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#161314] hover:bg-[#8E3046] hover:text-white hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
+              aria-label="Next testimonial"
+              title="Next testimonial"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Main Minimalist Review Card */}
+      {/* Main High-End Minimalist Editorial Quote Showcase */}
       {current && (
-        <div className="rounded-[32px] bg-white border border-[#EAE0D9] overflow-hidden">
+        <article
+          key={current.id}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="relative rounded-[24px] sm:rounded-[34px] bg-white border border-[#EAE0D9] shadow-[0_24px_60px_-28px_rgba(22,19,20,0.07)] px-4 py-6 sm:px-12 sm:py-11 lg:px-16 lg:py-13 overflow-hidden transition-all duration-300"
+        >
+          {/* Subtle Warm Champagne Accent Hairline at Top */}
           <div
-            key={current.id}
-            className="grid grid-cols-1 lg:grid-cols-12 items-stretch transition-opacity duration-300"
-          >
-            
-            {/* Left Column: Patron Profile (4 Cols) */}
-            <div className="lg:col-span-4 p-7 sm:p-9 bg-[#FAF8F5] border-b lg:border-b-0 lg:border-r border-[#EFE6E0] flex flex-col justify-between space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl overflow-hidden border border-[#E6DCD5] shrink-0">
-                  <SafeImage
-                    src={current.avatar}
-                    alt={current.name}
-                    category="avatar"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="font-serif text-2xl font-medium text-[#161314] leading-none">
-                    {current.name}
-                  </h3>
-                  <p className="text-xs text-[#5C5055]">
-                    {current.role}
-                  </p>
-                  <span className="block text-[10px] font-bold uppercase tracking-wider text-[#8E3046]">
-                    {current.source}
-                  </span>
-                </div>
-              </div>
+            className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#8E3046]/45 to-transparent"
+            aria-hidden="true"
+          />
 
-              <div className="divide-y divide-[#EAE0D9] border-t border-[#EAE0D9] text-xs">
-                <div className="py-2.5 flex items-center justify-between text-[#5C5055]">
-                  <span className="uppercase tracking-wider text-[10px] font-semibold">EXPERIENCE</span>
-                  <span className="font-semibold text-[#161314]">
-                    {current.type === 'home' ? 'VIP Home Service' : 'Bur Dubai Salon'}
-                  </span>
-                </div>
-                <div className="py-2.5 flex items-center justify-between text-[#5C5055]">
-                  <span className="uppercase tracking-wider text-[10px] font-semibold">VERIFIED</span>
-                  <span className="editorial-num font-medium">{current.date}</span>
-                </div>
-                <div className="pt-3">
-                  <span className="uppercase tracking-wider text-[10px] font-semibold text-[#7A6C72] block">
-                    TREATMENT BOOKED
-                  </span>
-                  <p className="font-serif text-base font-medium text-[#8E3046] mt-0.5">
-                    {current.serviceUsed}
-                  </p>
-                </div>
-              </div>
+          <div className="max-w-4xl mx-auto flex flex-col items-center text-center space-y-4 sm:space-y-7">
+            {/* Top Unboxed Rating & Source Line */}
+            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[10.5px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.18em] text-[#5C5055] font-semibold">
+              <span className="inline-flex items-center gap-0.5 text-[#C88A2B]" aria-label={`${current.rating} out of 5 stars`}>
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+                <Star className="w-3.5 h-3.5 fill-current" />
+              </span>
+              <span className="text-[#161314] editorial-num">5.0</span>
+              <span className="text-[#C9A99A]" aria-hidden="true">·</span>
+              <span className="text-[#8E3046]">{current.source}</span>
+              <span className="text-[#C9A99A]" aria-hidden="true">·</span>
+              <span>{current.type === 'home' ? 'VIP Home Service' : 'Bur Dubai Salon'}</span>
             </div>
 
-            {/* Right Column: Review Quote & Action (8 Cols) */}
-            <div className="lg:col-span-8 p-7 sm:p-10 lg:p-12 flex flex-col justify-between space-y-6 relative">
-              <Quote className="w-10 h-10 text-[#8E3046]/10 absolute top-6 right-8 pointer-events-none" />
+            {/* Clean, Elegant Editorial Serif Quote */}
+            <blockquote className="space-y-2.5 sm:space-y-3.5">
+              <p className="text-[10.5px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-[#7A6C72] font-semibold">
+                {current.headline}
+              </p>
+              <p
+                className="font-serif italic font-normal text-[21px] sm:text-[30px] lg:text-[35px] text-[#161314] leading-[1.38] sm:leading-[1.38] tracking-[-0.01em] max-w-[46ch] mx-auto"
+                data-testid="active-testimonial-quote"
+              >
+                “{current.quote}”
+              </p>
+            </blockquote>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-0.5 text-[#D97706]">
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                    <Star className="w-3.5 h-3.5 fill-current" />
-                  </div>
-                  <span className="text-xs font-semibold text-[#161314]">5.0 Verified Client Rating</span>
+            {/* Hairline Divider */}
+            <div className="w-full h-[1px] bg-[#EFE6E0]" aria-hidden="true" />
+
+            {/* Patron Attribution & Treatment Action Bar */}
+            <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 text-left">
+              {/* Patron Identity — Inline on both Mobile & Desktop */}
+              <div className="flex items-center gap-3 sm:gap-3.5 w-full md:w-auto justify-center md:justify-start">
+                <div
+                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#FAF6F2] border border-[#E2D3C8] text-[#8E3046] font-serif text-base sm:text-lg font-semibold flex items-center justify-center shrink-0"
+                  aria-hidden="true"
+                >
+                  {getClientInitials(current.name)}
                 </div>
-
-                <h4 className="font-serif text-2xl sm:text-3xl font-medium text-[#161314] leading-snug">
-                  “{current.headline}”
-                </h4>
-
-                <p className="text-sm sm:text-base text-[#5C5055] leading-[1.8]">
-                  “{current.quote}”
-                </p>
+                <div className="space-y-0.5 min-w-0">
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-serif text-xl sm:text-2xl font-medium text-[#161314] leading-none truncate">
+                      {current.name}
+                    </h3>
+                    <CheckCircle2
+                      className="w-3.5 h-3.5 text-[#8E3046] shrink-0"
+                      aria-label="Verified Patron"
+                    />
+                  </div>
+                  <p className="text-[11.5px] sm:text-xs text-[#5C5055] truncate">
+                    {current.role} <span className="text-[#C9A99A]">·</span> {current.date}
+                  </p>
+                </div>
               </div>
 
-              <div className="pt-5 border-t border-[#EFE6E0] flex flex-wrap items-center justify-between gap-4">
+              {/* Treatment Booked & Direct CTA */}
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-4 w-full md:w-auto justify-center md:justify-end border-t md:border-t-0 border-[#F2EAE4] pt-3 md:pt-0">
+                <div className="text-center sm:text-right">
+                  <span className="block text-[9.5px] sm:text-[10px] uppercase tracking-[0.18em] text-[#7A6C72] font-semibold">
+                    Treatment Reviewed
+                  </span>
+                  <p className="font-serif text-[15px] sm:text-lg font-medium text-[#161314] leading-snug">
+                    {current.serviceUsed}
+                    {matchedService ? (
+                      <span className="text-[#8E3046] font-sans text-xs font-semibold ml-1.5 editorial-num">
+                        · {formatPrice(matchedService.price)}
+                      </span>
+                    ) : null}
+                  </p>
+                </div>
+
                 {onBookService && (
                   <button
+                    type="button"
                     onClick={() => onBookService(current.serviceUsed)}
-                    className="px-6 py-3 rounded-full rose-gold-gradient text-white text-xs uppercase tracking-wider font-semibold transition-all cursor-pointer flex items-center gap-1.5"
+                    className="w-full sm:w-auto min-h-[42px] px-5 py-2.5 rounded-full bg-[#161314] hover:bg-[#8E3046] text-white text-xs uppercase tracking-[0.14em] font-semibold transition-colors cursor-pointer inline-flex items-center justify-center gap-1.5 shrink-0"
                   >
                     <span>Book This Treatment</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
                 )}
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <a
-                    href={SALON_INFO.freshaVenueUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-semibold text-[#8E3046] hover:underline flex items-center gap-1 transition-colors"
-                  >
-                    <span>Fresha 5.0★ Reviews</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                  <a
-                    href={SALON_INFO.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-semibold text-[#5C5055] hover:text-[#8E3046] flex items-center gap-1 transition-colors"
-                  >
-                    <span>Google Maps ({SALON_INFO.reviewsCount}+)</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
               </div>
             </div>
-
           </div>
-        </div>
+        </article>
       )}
 
-      {/* Patron Selector Tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+      {/* Minimalist Editorial Slide Selector Strip */}
+      <div
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3"
+        role="group"
+        aria-label="Select client review"
+      >
         {filteredTestimonials.map((item, idx) => {
           const isActive = idx === currentIndex;
-          const initials = item.name.split(' ').map(n => n[0]).join('').slice(0, 2);
           return (
             <button
               key={item.id}
+              type="button"
               onClick={() => setCurrentIndex(idx)}
-              className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex items-center gap-2.5 ${
+              className={`group relative pt-3 pb-2.5 px-3.5 rounded-2xl text-left transition-all cursor-pointer border ${
                 isActive
-                  ? 'border-[#8E3046] bg-white shadow-2xs'
-                  : 'border-[#EAE0D9] bg-white/60 hover:bg-white'
+                  ? 'bg-white border-[#8E3046]/50 shadow-2xs'
+                  : 'bg-white/50 border-[#EAE0D9] hover:bg-white hover:border-[#C9A99A]'
               }`}
               title={`Read review by ${item.name}`}
               aria-label={`Jump to review by ${item.name}`}
+              aria-current={isActive ? 'true' : undefined}
             >
-              <div className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-[11px] font-bold ${
-                isActive ? 'bg-[#8E3046] text-white' : 'bg-[#EFE6E0] text-[#8E3046]'
-              }`}>
-                {initials}
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold text-[#161314] truncate">
+              {/* Minimal Top Progress Hairline */}
+              <span
+                className={`absolute inset-x-3.5 top-0 h-[2px] rounded-full transition-colors ${
+                  isActive ? 'bg-[#8E3046]' : 'bg-transparent group-hover:bg-[#E2D3C8]'
+                }`}
+                aria-hidden="true"
+              />
+              <div className="flex items-center justify-between gap-1.5">
+                <p className="font-serif text-base font-medium text-[#161314] truncate">
                   {item.name}
                 </p>
-                <p className="text-[10px] text-[#7A6C72] truncate">
-                  {item.role}
-                </p>
+                <span className="text-[10px] font-semibold text-[#C88A2B] shrink-0 editorial-num">
+                  5.0 ★
+                </span>
               </div>
+              <p className="text-[11px] text-[#7A6C72] truncate mt-0.5">
+                {item.type === 'home' ? 'VIP Home Service' : 'Bur Dubai Salon'}
+              </p>
             </button>
           );
         })}
