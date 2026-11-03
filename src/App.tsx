@@ -9,42 +9,102 @@ import { HomePage } from './components/HomePage';
 import { ServicesPage } from './components/ServicesPage';
 import { GalleryBookingPage } from './components/GalleryBookingPage';
 import { Footer } from './components/Footer';
-import { Calendar } from 'lucide-react';
+import { WhatsAppFloatingChat } from './components/WhatsAppFloatingChat';
+import { SlenderLogoMark } from './components/SlenderLogo';
+import { generateLocalBusinessSchema, SEO_METADATA } from './utils/booking';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'services' | 'booking'>('home');
   const [preselectedService, setPreselectedService] = useState<string>('Dr. Renaud Paris Radiance Facial');
+  const [showIntroVeil, setShowIntroVeil] = useState(true);
 
-  // Scroll to top whenever page switches
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const timer = setTimeout(() => {
+      setShowIntroVeil(false);
+    }, 980);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    document.title = SEO_METADATA.title;
+    const currentUrl = window.location.origin + window.location.pathname;
+
+    let canonicalLink = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', currentUrl);
+
+    let ogUrlMeta = document.querySelector<HTMLMetaElement>('meta[property="og:url"]');
+    if (!ogUrlMeta) {
+      ogUrlMeta = document.createElement('meta');
+      ogUrlMeta.setAttribute('property', 'og:url');
+      document.head.appendChild(ogUrlMeta);
+    }
+    ogUrlMeta.setAttribute('content', currentUrl);
+
+    let schemaScript = document.getElementById('local-business-schema') as HTMLScriptElement | null;
+    if (!schemaScript) {
+      schemaScript = document.createElement('script');
+      schemaScript.id = 'local-business-schema';
+      schemaScript.type = 'application/ld+json';
+      document.head.appendChild(schemaScript);
+    }
+    schemaScript.textContent = JSON.stringify(generateLocalBusinessSchema(window.location.origin));
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }, [currentPage]);
 
   const handleSelectServiceAndBook = (serviceName: string) => {
     setPreselectedService(serviceName);
     setCurrentPage('booking');
-    // Scroll directly to the booking section
     setTimeout(() => {
       const el = document.getElementById('booking-section');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 150);
+    }, 120);
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF7F5] text-[#1E2421] selection:bg-[#F7D6DE] selection:text-[#BA4961]">
+    <div className="min-h-screen flex flex-col luxury-ambient-bg text-[#161314] selection:bg-[#8E3046] selection:text-white">
       
-      {/* Floating Glassmorphism Navbar */}
+      {/* Signature Luxury Page Load Entrance Veil (Non-blocking pointer-events-none) */}
+      {showIntroVeil && (
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 z-[60] pointer-events-none luxury-dark-surface flex flex-col items-center justify-center luxury-loader-veil"
+        >
+          <div className="text-center space-y-4 px-6 flex flex-col items-center">
+            <SlenderLogoMark size="lg" showWordmarkInside={false} />
+            <span className="block text-[10px] uppercase tracking-[0.35em] text-[#C89D66] font-medium">
+              BUR DUBAI SANCTUARY &amp; VIP HOME ATELIER
+            </span>
+            <p className="font-cinzel text-2xl sm:text-3xl tracking-[0.28em] text-white font-medium">
+              SLENDER
+            </p>
+            <div className="w-36 h-[1px] bg-white/15 mx-auto overflow-hidden">
+              <div className="w-full h-full bg-[#C89D66] luxury-loader-bar" />
+            </div>
+          </div>
+        </div>
+      )}
+
       <Navbar
         currentPage={currentPage}
         onNavigate={setCurrentPage}
       />
 
-      {/* Main Content Area with proper fixed header offset */}
-      <main className="flex-grow pt-16 sm:pt-20 md:pt-24">
+      <main className="flex-grow pt-16 sm:pt-20">
         {currentPage === 'home' && (
-          <HomePage onNavigate={setCurrentPage} />
+          <HomePage
+            onNavigate={setCurrentPage}
+            onSelectServiceAndBook={handleSelectServiceAndBook}
+          />
         )}
 
         {currentPage === 'services' && (
@@ -56,20 +116,11 @@ export default function App() {
         )}
       </main>
 
-      {/* Floating Quick Action Button on Mobile */}
-      {currentPage !== 'booking' && (
-        <div className="fixed bottom-6 right-6 z-40 md:hidden">
-          <button
-            onClick={() => setCurrentPage('booking')}
-            className="p-4 rounded-full rose-gradient-bg text-white shadow-[0_6px_25px_rgba(217,107,130,0.45)] active:scale-95 transition flex items-center justify-center cursor-pointer"
-            aria-label="Book Appointment"
-          >
-            <Calendar className="w-6 h-6" />
-          </button>
-        </div>
-      )}
+      {/* Persistent Minimal WhatsApp Floating Action Button & Pre-filled Chat Window */}
+      <WhatsAppFloatingChat
+        onOpenBooking={() => setCurrentPage('booking')}
+      />
 
-      {/* Sleek Footer with direct verified social media channels */}
       <Footer
         onNavigate={setCurrentPage}
       />
@@ -77,3 +128,4 @@ export default function App() {
     </div>
   );
 }
+

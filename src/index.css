@@ -2,7 +2,8 @@
 
 @layer base {
   :root {
-    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    --font-display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
     --font-cinzel: 'Cinzel', serif;
     --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
@@ -10,17 +11,25 @@
   html {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     font-family: var(--font-sans);
-    background-color: #FAF7F5;
-    color: #1E2421;
+    background-color: #FAF8F5;
+    color: #161314;
     overflow-x: hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   h1, h2, h3, .font-serif {
     font-family: var(--font-serif);
+  }
+
+  .font-display {
+    font-family: var(--font-display);
   }
 
   .font-cinzel {
@@ -28,65 +37,154 @@
   }
 }
 
-/* Premium Rose & Sage Gradients */
-.rose-gradient-text {
-  background: linear-gradient(135deg, #BA4961 0%, #D96B82 50%, #E88295 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Tabular numerals for AED prices, ratings, durations, and phone numbers */
+.editorial-num {
+  font-variant-numeric: tabular-nums;
 }
 
-.sage-gradient-text {
-  background: linear-gradient(135deg, #3B6343 0%, #4E7A56 50%, #82AF89 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Minimalist Warm Alabaster Canvas — Zero heavy repaint gradients during scroll */
+.luxury-ambient-bg {
+  background-color: #FAF8F5;
 }
 
-.rose-gradient-bg {
-  background: linear-gradient(135deg, #E88295 0%, #D96B82 60%, #BA4961 100%);
+.luxury-dark-surface {
+  background-color: #141013;
 }
 
-.sage-gradient-bg {
-  background: linear-gradient(135deg, #96BE9C 0%, #82AF89 60%, #4E7A56 100%);
+/* Clean Minimalist Editorial Card — GPU-accelerated hover lift */
+.glass-card-2026 {
+  background-color: #FFFFFF;
+  border: 1px solid #EAE0D9;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.rose-sage-blend {
-  background: linear-gradient(135deg, #FDE8ED 0%, #FFF5F7 50%, #EDF7EF 100%);
+.glass-card-2026:hover {
+  border-color: #C9A99A;
+  box-shadow: 0 20px 40px -18px rgba(22, 19, 20, 0.08);
+  transform: translate3d(0, -3px, 0);
 }
 
-/* Luxury Light Glassmorphism */
-.glass-panel-light {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(217, 107, 130, 0.16);
-  box-shadow: 0 10px 30px -5px rgba(217, 107, 130, 0.05), 0 5px 15px -3px rgba(130, 175, 137, 0.05);
+.rose-gold-gradient {
+  background-color: #8E3046;
+  background-image: linear-gradient(135deg, #9B364E 0%, #782337 100%);
 }
 
-.glass-card-light {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(232, 130, 149, 0.18);
-  box-shadow: 0 12px 35px -8px rgba(217, 107, 130, 0.08), 0 4px 12px -2px rgba(130, 175, 137, 0.06);
+.rose-gold-gradient:hover {
+  background-color: #782337;
+  background-image: linear-gradient(135deg, #872B41 0%, #631B2C 100%);
 }
 
-.glass-card-light:hover {
-  border-color: rgba(217, 107, 130, 0.4);
-  box-shadow: 0 20px 40px -10px rgba(217, 107, 130, 0.16), 0 8px 20px -4px rgba(130, 175, 137, 0.12);
+.champagne-badge {
+  background-color: #F4ECE6;
+  border: 1px solid #E2D3C8;
 }
 
-/* Custom Scrollbar */
+/* ==========================================================================
+   SIGNATURE LUXURY LOAD-IN CHOREOGRAPHY (GPU-Only: transform & opacity)
+   ========================================================================== */
+
+@keyframes luxuryCurtainLift {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+@keyframes luxuryProgressLine {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes editorialFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes heroImageCinema {
+  0% {
+    opacity: 0;
+    transform: scale3d(1.07, 1.07, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+.luxury-loader-veil {
+  animation: luxuryCurtainLift 0.95s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.luxury-loader-bar {
+  transform-origin: left center;
+  animation: luxuryProgressLine 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-stagger-1 {
+  animation: editorialFadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+
+.reveal-stagger-2 {
+  animation: editorialFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+}
+
+.reveal-stagger-3 {
+  animation: editorialFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
+}
+
+.reveal-stagger-4 {
+  animation: editorialFadeUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+}
+
+.hero-portrait-reveal {
+  animation: heroImageCinema 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .luxury-loader-veil,
+  .reveal-stagger-1,
+  .reveal-stagger-2,
+  .reveal-stagger-3,
+  .reveal-stagger-4,
+  .hero-portrait-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Custom Minimalist Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF7F5;
+  background: #FAF8F5;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D96B82;
-  border-radius: 4px;
-  border: 2px solid #FAF7F5;
+  background: #D6C8C0;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #BA4961;
+  background: #8E3046;
 }

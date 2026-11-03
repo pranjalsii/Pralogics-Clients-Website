@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="slenderBg" x1="15" y1="10" x2="105" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E42640" />
+      <stop offset="55%" stop-color="#C91E37" />
+      <stop offset="100%" stop-color="#8E182B" />
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="url(#slenderBg)" stroke="#F3B8C4" stroke-opacity="0.35" stroke-width="2" />
+  <!-- Top pearl / hair crown accent dot from official Slender logo -->
+  <circle cx="59.5" cy="17.5" r="4.3" fill="#FFFFFF" />
+  <!-- Outer S-curve flowing hair strand -->
+  <path
+    d="M55.2 14.5C49.5 20.2 49.8 31.4 56.8 41.8C64.2 52.8 70.6 62.6 67.2 73.2C64.4 81.8 54.6 85.2 46.8 81.4C53.2 82.2 59.5 78.6 60.8 72.1C62.4 64.2 56.5 55.2 49.8 45.4C43.2 35.8 43.4 22.8 55.2 14.5Z"
+    fill="#FFFFFF"
+  />
+  <!-- Woman left-facing profile silhouette + inner flowing hair curl -->
+  <path
+    d="M49.5 21.2C43.6 25.8 41.8 33.4 42.1 40.2C42.2 42.6 41.2 44.3 39.2 46.4C37.8 47.9 37.9 49.1 39.6 49.8C40.5 50.2 40.8 51.1 40.1 52.1C39.5 52.9 39.7 53.9 40.8 54.4C40.1 55.2 40.3 56.3 41.4 56.8C42.1 57.2 41.9 58.6 41.7 60.2C41.4 62.8 43.2 64.6 46.2 64.3C49.5 64.0 52.8 61.6 55.6 63.2C58.8 65.0 59.6 70.4 56.4 74.6C53.5 78.4 48.2 78.8 44.4 76.2C47.8 81.5 55.8 82.4 60.5 77.2C65.2 72.0 63.4 63.4 56.6 53.8C49.8 44.2 44.5 33.6 49.5 21.2Z"
+    fill="#FFFFFF"
+  />
+  <!-- Clean geometric SLENDER wordmark inside emblem -->
+  <text
+    x="60"
+    y="99"
+    text-anchor="middle"
+    fill="#FFFFFF"
+    font-family="'Plus Jakarta Sans', 'Montserrat', sans-serif"
+    font-size="13.5"
+    font-weight="600"
+    letter-spacing="2.6"
+  >
+    SLENDER
+  </text>
+</svg>

@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import {
   GALLERY_ITEMS,
   SALON_SERVICES,
+  COMPLETE_FRESHA_PRICE_LIST,
   STYLISTS_LIST,
   TIME_SLOTS,
   DUBAI_AREAS,
@@ -17,20 +18,15 @@ import {
   GalleryItem
 } from '../utils/booking';
 import {
-  Calendar,
-  Clock,
-  User,
-  Phone,
-  Sparkles,
-  MapPin,
   CheckCircle2,
   ExternalLink,
   X,
   MessageCircle,
   ShieldCheck,
-  Home as HomeIcon,
   Navigation,
-  ArrowRight
+  ArrowUpRight,
+  Sparkles,
+  Home
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { SafeImage } from './SafeImage';
@@ -40,7 +36,6 @@ interface GalleryBookingPageProps {
 }
 
 export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialService }) => {
-  // Form State
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [service, setService] = useState(
@@ -54,7 +49,6 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
   const [stylist, setStylist] = useState('any');
   const [notes, setNotes] = useState('');
   
-  // Validation & UI State
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submittedBooking, setSubmittedBooking] = useState<{
     message: string;
@@ -71,11 +65,9 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
     };
   } | null>(null);
 
-  // Gallery Filter & Lightbox State
   const [galleryFilter, setGalleryFilter] = useState<string>('all');
   const [activeLightboxItem, setActiveLightboxItem] = useState<GalleryItem | null>(null);
 
-  // Set default date to tomorrow
   useEffect(() => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -86,12 +78,13 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
     setDate(defaultDateStr);
   }, []);
 
-  // Update service if prop changes
   useEffect(() => {
     if (initialService) {
       setService(initialService);
     }
   }, [initialService]);
+
+  const isCustomAlaCarte = !SALON_SERVICES.some(s => s.name === service);
 
   const filteredGallery = GALLERY_ITEMS.filter(item => {
     if (galleryFilter === 'all') return true;
@@ -100,7 +93,6 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
 
   const fullHomeAddress = `${selectedArea}${address ? `, ${address.trim()}` : ''}`;
 
-  // Calculate live preview message
   const previewMessage = generateWhatsAppMessage({
     service,
     date: date || '[Select Date]',
@@ -161,45 +153,43 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
         stylist
       }
     });
-
-    // Automatically trigger WhatsApp redirect
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <div className="py-16 md:py-24 px-4 sm:px-6 lg:px-12 space-y-24 bg-[#FAF7F5]">
+    <div className="py-10 md:py-16 px-4 sm:px-6 lg:px-10 space-y-24">
       
-      {/* SECTION 1: VISUAL PORTFOLIO (GALLERY) */}
-      <section id="gallery-section" className="max-w-7xl mx-auto space-y-12 scroll-mt-28">
-        <div className="text-center max-w-2xl mx-auto space-y-4">
-          <span className="text-xs uppercase tracking-[0.3em] text-[#BA4961] font-bold">
-            Visual Portfolio
-          </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-[#1E2421]">
-            The Slender Gallery
-          </h2>
-          <div className="w-20 h-0.5 bg-gradient-to-r from-[#D96B82] to-[#82AF89] mx-auto mt-4" />
-          <p className="text-[#52605B] text-sm sm:text-base leading-relaxed">
-            A visual showcase of glowing French facials, organic eyebrow shaping, Russian manicures, and our serene Bur Dubai salon sanctuary.
+      {/* SECTION 1: MINIMALIST LOOKBOOK GALLERY */}
+      <section id="gallery-section" className="max-w-7xl mx-auto space-y-10 scroll-mt-28">
+        <div className="reveal-stagger-1 flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-[#EAE0D9] pb-8">
+          <div className="space-y-2.5 max-w-2xl">
+            <span className="text-[11px] uppercase tracking-[0.22em] text-[#8E3046] font-bold block">
+              SALON SANCTUARY &amp; LOOKBOOK
+            </span>
+            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-medium text-[#161314]">
+              The Slender Lookbook
+            </h1>
+          </div>
+          <p className="text-[#5C5055] text-sm sm:text-[15px] leading-relaxed max-w-md">
+            Explore our Bur Dubai ladies sanctuary alongside our signature hair styling, Dr. Renaud facials, nail extensions, and spa rituals.
           </p>
         </div>
 
-        {/* Gallery Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5">
+        {/* Lookbook Category Filter Tabs */}
+        <div className="reveal-stagger-2 flex flex-wrap items-center gap-2">
           {[
-            { id: 'all', label: 'All Works' },
-            { id: 'hair', label: 'Hair Couture' },
-            { id: 'skin', label: 'Radiant Skin' },
-            { id: 'nails', label: 'Spa Nails' },
-            { id: 'interior', label: 'Salon Interior' }
+            { id: 'all', label: 'All Moments (8)' },
+            { id: 'hair', label: 'Hair Studio' },
+            { id: 'skin', label: 'Facial & Threading' },
+            { id: 'nails', label: 'Nail & Lash Bar' },
+            { id: 'interior', label: 'Salon Sanctuary' }
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setGalleryFilter(tab.id)}
-              className={`px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.18em] font-semibold transition-all duration-300 cursor-pointer shadow-xs ${
+              className={`px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer ${
                 galleryFilter === tab.id
-                  ? 'rose-gradient-bg text-white shadow-[0_4px_16px_rgba(217,107,130,0.35)]'
-                  : 'border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]'
+                  ? 'bg-[#161314] text-white'
+                  : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
               }`}
             >
               {tab.label}
@@ -207,280 +197,240 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
           ))}
         </div>
 
-        {/* 4-Column Modern Visual Gallery */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredGallery.map((item, idx) => (
-            <motion.div
+        {/* 4-Column Minimalist Gallery Grid (Zero scroll-jank observers) */}
+        <div className="reveal-stagger-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredGallery.map((item) => (
+            <figure
               key={item.id}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{
-                duration: 0.5,
-                delay: (idx % 4) * 0.1,
-                ease: [0.22, 1, 0.36, 1]
-              }}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
               onClick={() => setActiveLightboxItem(item)}
-              className="group relative rounded-3xl overflow-hidden bg-white border border-[#E88295]/20 h-80 cursor-pointer shadow-md transition-shadow duration-300 hover:shadow-2xl"
+              className="group rounded-3xl glass-card-2026 overflow-hidden cursor-pointer flex flex-col justify-between"
             >
-              <SafeImage
-                src={item.image}
-                alt={item.title}
-                category={item.category as any}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter contrast-[1.02]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity pointer-events-none" />
-              
-              <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#F7D6DE]">
-                  {item.category}
-                </span>
-                <h4 className="font-serif text-lg font-bold text-white mt-1 group-hover:text-[#F7D6DE] transition-colors">
-                  {item.title}
-                </h4>
-                <p className="text-xs text-[#E5E7EB] mt-1.5 line-clamp-2 leading-relaxed">
-                  {item.description}
-                </p>
+              <div className="relative aspect-[4/4.2] overflow-hidden bg-[#EFE6E0]">
+                <SafeImage
+                  src={item.image}
+                  alt={item.title}
+                  category={item.category as any}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute top-3.5 right-3.5">
+                  <span className="w-8 h-8 rounded-full bg-white/95 flex items-center justify-center text-[#161314] group-hover:bg-[#8E3046] group-hover:text-white transition-colors shrink-0">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </span>
+                </div>
               </div>
 
-              {item.featured && (
-                <span className="absolute top-4 right-4 bg-white/90 text-[#BA4961] text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-md backdrop-blur-sm">
-                  Featured
+              <figcaption className="p-5 space-y-1.5">
+                <span className="text-[10px] uppercase tracking-[0.18em] text-[#8E3046] font-bold block">
+                  {item.category}
                 </span>
-              )}
-            </motion.div>
+                <h4 className="font-serif text-xl font-medium text-[#161314] group-hover:text-[#8E3046] transition-colors">
+                  {item.title}
+                </h4>
+                <p className="text-xs text-[#5C5055] line-clamp-2 leading-relaxed">
+                  {item.description}
+                </p>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </section>
 
-      {/* SECTION 2: SMART BOOKING FORM & DIRECT CONTACT */}
-      <section className="max-w-7xl mx-auto scroll-mt-28" id="booking-section">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      {/* SECTION 2: 2026 CONCIERGE RESERVATION STUDIO */}
+      <section className="max-w-7xl mx-auto scroll-mt-28 pt-6" id="booking-section">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
-          {/* Left Column: Salon Concierge & Location */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-5 space-y-8"
-          >
-            <div className="space-y-4">
-              <span className="text-xs uppercase tracking-[0.3em] text-[#BA4961] font-bold">
-                Private Concierge
+          {/* Left Column: Concierge Details & Hygiene Charter (5 Cols) */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full champagne-badge text-[11px] uppercase tracking-[0.2em] text-[#7A4B2A] font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-[#9E3B52]" />
+                <span>Concierge Reservation</span>
               </span>
-              <h3 className="font-serif text-3xl sm:text-4xl font-bold text-[#1E2421]">
-                Reserve Your Chair or VIP Home Service
-              </h3>
-              <p className="text-[#52605B] text-sm leading-relaxed">
-                We cater to in-salon appointments in Bur Dubai and doorstep VIP home beauty treatments across Dubai.
+              <h2 className="font-serif text-3xl sm:text-5xl font-medium text-[#161215] leading-tight">
+                Book Your Salon Visit or VIP Home Service
+              </h2>
+              <p className="text-[#5C5055] text-sm leading-relaxed">
+                Confirm your appointment immediately with Fatima, Savya, or Purnam via WhatsApp (+971 50 915 2969), direct landline (+971 4 351 5745), or our official Fresha booking portal.
               </p>
             </div>
 
-            {/* Quick Contact & Google Map Card */}
-            <div className="p-8 rounded-3xl bg-white border border-[#E88295]/25 shadow-xl space-y-6">
+            {/* Rounded-3xl Contact Bento Card */}
+            <div className="rounded-3xl bg-white border border-[#E8D8D0] p-6 sm:p-7 space-y-5 shadow-xs">
               
-              {/* Address */}
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-[#FFF0F3] border border-[#D96B82]/30 flex items-center justify-center text-[#BA4961] flex-shrink-0">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-[#1E2421]">
-                    Studio Address (Bur Dubai)
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#52605B] mt-1 leading-relaxed">
-                    {SALON_INFO.fullAddress}
-                  </p>
-                  <p className="text-xs text-[#2C4832] font-semibold mt-0.5">
-                    Plus Code: {SALON_INFO.plusCode}
-                  </p>
-                  <a
-                    href={SALON_INFO.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-[#2C4832] font-bold mt-2 hover:underline"
-                  >
-                    <Navigation className="w-3.5 h-3.5 text-[#4E7A56]" />
-                    <span>Open in Google Maps ({SALON_INFO.rating} ★ · {SALON_INFO.reviewsCount} Reviews)</span>
-                  </a>
-                </div>
+              <div className="space-y-1.5 pb-4 border-b border-[#EFE3DD]">
+                <span className="text-[10px] uppercase tracking-[0.18em] text-[#9E3B52] font-bold block">
+                  BUR DUBAI FLAGSHIP ADDRESS
+                </span>
+                <p className="text-sm font-semibold text-[#161215] leading-relaxed">
+                  {SALON_INFO.fullAddress}
+                </p>
+                <p className="text-xs text-[#5C5055]">
+                  Plus Code: {SALON_INFO.plusCode} · Near Meena Bazaar
+                </p>
+                <a
+                  href={SALON_INFO.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#9E3B52] font-semibold pt-1 hover:underline"
+                >
+                  <Navigation className="w-3.5 h-3.5" />
+                  <span>Open in Google Maps ({SALON_INFO.rating} ★ · {SALON_INFO.reviewsCount} Reviews)</span>
+                </a>
               </div>
 
-              {/* Working Hours */}
-              <div className="flex items-start gap-4 pt-4 border-t border-[#E88295]/15">
-                <div className="w-10 h-10 rounded-full bg-[#EDF7EF] border border-[#82AF89]/30 flex items-center justify-center text-[#2C4832] flex-shrink-0">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-[#1E2421]">
-                    Operational Hours
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#1E2421] font-semibold mt-1">
-                    {SALON_INFO.hoursDaily}
-                  </p>
-                  <p className="text-xs text-[#52605B]">
-                    Open All 7 Days (In-Salon Suites & VIP Doorstep Service)
-                  </p>
-                </div>
-              </div>
-
-              {/* Direct Lines */}
-              <div className="flex items-start gap-4 pt-4 border-t border-[#E88295]/15">
-                <div className="w-10 h-10 rounded-full bg-[#FFF0F3] border border-[#D96B82]/30 flex items-center justify-center text-[#BA4961] flex-shrink-0">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold uppercase tracking-wider text-[#1E2421]">
-                    Direct Concierge Lines
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#1E2421] font-semibold mt-1">
-                    Landline: <a href={`tel:${SALON_INFO.phone}`} className="hover:text-[#BA4961]">{SALON_INFO.phone}</a>
-                  </p>
-                  <p className="text-xs sm:text-sm text-[#BA4961] font-bold">
-                    WhatsApp: <a href={`https://wa.me/${SALON_INFO.whatsappRaw}`} target="_blank" rel="noopener noreferrer" className="hover:underline">{SALON_INFO.mobile}</a>
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Slender Guarantee */}
-            <div className="p-6 rounded-3xl bg-[#EDF7EF] border border-[#82AF89]/40 space-y-2">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#2C4832]">
-                <ShieldCheck className="w-4 h-4 text-[#4E7A56]" />
-                <span>The Slender Dubai Guarantee</span>
-              </div>
-              <p className="text-xs text-[#52605B] leading-relaxed">
-                100% certified female therapists, hospital-grade sanitized instruments, disposable waxing and manicure kits, and transparent AED pricing with zero hidden surcharges.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Smart Booking Form Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-7"
-          >
-            <div className="p-8 sm:p-12 rounded-3xl bg-white border-2 border-[#E88295]/30 shadow-2xl relative">
-              
-              {/* Form Title */}
-              <div className="mb-8 space-y-2">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EDF7EF] border border-[#82AF89]/30 text-[#2C4832] text-[11px] font-bold uppercase tracking-wider">
-                  <MessageCircle className="w-3.5 h-3.5 text-[#2C4832]" />
-                  <span>Direct WhatsApp Reservation</span>
-                </div>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#1E2421]">
-                  Book Studio or Home Service
-                </h3>
-                <p className="text-xs sm:text-sm text-[#52605B]">
-                  Confirming formats your booking and opens WhatsApp directly with our Dubai concierge team.
+              <div className="space-y-1 pb-4 border-b border-[#EFE3DD]">
+                <span className="text-[10px] uppercase tracking-[0.18em] text-[#9E3B52] font-bold block">
+                  OFFICIAL WORKING HOURS
+                </span>
+                <p className="text-sm font-semibold text-[#161215] editorial-num">
+                  Mon–Fri: 10:00 AM – 10:00 PM
+                </p>
+                <p className="text-sm font-semibold text-[#161215] editorial-num">
+                  Sat–Sun: 09:05 AM – 10:00 PM
+                </p>
+                <p className="text-xs text-[#5C5055]">
+                  Payments: {SALON_INFO.paymentAccepted}
                 </p>
               </div>
 
-              {/* Service Type Switcher */}
+              <div className="space-y-1.5 editorial-num">
+                <span className="text-[10px] uppercase tracking-[0.18em] text-[#9E3B52] font-bold block">
+                  DIRECT CONCIERGE LINES
+                </span>
+                <p className="text-sm font-semibold text-[#161215]">
+                  Landline: <a href={`tel:${SALON_INFO.phone}`} className="underline hover:text-[#9E3B52]">{SALON_INFO.phone}</a>
+                </p>
+                <p className="text-sm font-semibold text-[#1F7A54]">
+                  WhatsApp: <a href={`https://wa.me/${SALON_INFO.whatsappRaw}`} target="_blank" rel="noopener noreferrer" className="underline">{SALON_INFO.mobile}</a>
+                </p>
+              </div>
+
+            </div>
+
+            {/* Hygiene Charter */}
+            <div className="p-6 rounded-3xl luxury-dark-surface text-white space-y-2 border border-white/10">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#E8B4B8]">
+                <ShieldCheck className="w-4 h-4 text-[#34D399]" />
+                <span>Verified Fresha & Salon Guarantee</span>
+              </div>
+              <p className="text-xs text-white/75 leading-relaxed">
+                Woman-owned & Asian-owned licensed Dubai salon. 100% female staff (Fatima, Savya & Purnam), hospital-grade sterilization, and verified AED pricing from AED 14 to AED 599.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Sculpted Rounded-[36px] Booking Form (7 Cols) */}
+          <div className="lg:col-span-7">
+            <div className="p-7 sm:p-11 rounded-[36px] bg-white border border-[#E8D8D0] shadow-md">
+              
+              <div className="mb-7 pb-5 border-b border-[#EFE3DD] space-y-1.5">
+                <span className="text-[10.5px] uppercase tracking-[0.2em] text-[#9E3B52] font-bold block">
+                  INSTANT WHATSAPP & FRESHA CONFIRMATION
+                </span>
+                <h3 className="font-serif text-3xl font-semibold text-[#161215]">
+                  Schedule Your Appointment
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5C5055]">
+                  Select your treatment and preferred time below to confirm instantly with our Bur Dubai desk.
+                </p>
+              </div>
+
+              {/* Service Mode Selector */}
               <div className="mb-6">
-                <label className="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2">
-                  Select Appointment Type <span className="text-[#BA4961]">*</span>
+                <label className="block text-xs uppercase tracking-wider text-[#161215] font-bold mb-2.5">
+                  Select Experience Mode <span className="text-[#9E3B52]">*</span>
                 </label>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2 p-1.5 rounded-2xl bg-[#F5ECE7]">
                   <button
                     type="button"
                     onClick={() => setServiceType('salon')}
-                    className={`py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition cursor-pointer ${
+                    className={`py-3 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                       serviceType === 'salon'
-                        ? 'rose-gradient-bg text-white shadow-md'
-                        : 'bg-[#FAF7F5] border border-[#E88295]/30 text-[#52605B] hover:bg-[#FFF0F3]'
+                        ? 'bg-white text-[#9E3B52] shadow-xs'
+                        : 'text-[#5C5055] hover:text-[#161215]'
                     }`}
                   >
-                    <Sparkles className="w-4 h-4" />
-                    <span>In-Salon (Bur Dubai)</span>
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>In-Salon (Shop No. 6)</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setServiceType('home')}
-                    className={`py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition cursor-pointer ${
+                    className={`py-3 px-4 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                       serviceType === 'home'
-                        ? 'bg-[#2C4832] text-white shadow-md'
-                        : 'bg-[#FAF7F5] border border-[#82AF89]/30 text-[#52605B] hover:bg-[#EDF7EF]'
+                        ? 'bg-[#161215] text-white shadow-xs'
+                        : 'text-[#5C5055] hover:text-[#161215]'
                     }`}
                   >
-                    <HomeIcon className="w-4 h-4" />
+                    <Home className="w-3.5 h-3.5 text-[#C89D66]" />
                     <span>VIP Home Service</span>
                   </button>
                 </div>
               </div>
 
-              <form onSubmit={handleBookingSubmit} className="space-y-6">
+              <form onSubmit={handleBookingSubmit} className="space-y-5">
                 
-                {/* Full Name */}
-                <div>
-                  <label className="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" htmlFor="fullName">
-                    Full Name <span className="text-[#BA4961]">*</span>
-                  </label>
-                  <div className="relative">
-                    <User className="w-4 h-4 text-[#8A9691] absolute left-4 top-3.5" />
+                {/* Full Name & Phone Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-xs uppercase tracking-wider text-[#161215] font-bold mb-2" htmlFor="fullName">
+                      Your Full Name <span className="text-[#9E3B52]">*</span>
+                    </label>
                     <input
                       id="fullName"
                       type="text"
                       value={name}
                       onChange={e => setName(e.target.value)}
                       placeholder="e.g. Sarah Al Mansoori"
-                      className={`w-full pl-11 pr-4 py-3.5 rounded-2xl bg-[#FAF7F5] border text-sm text-[#1E2421] placeholder-[#8A9691] focus:outline-none focus:ring-2 transition ${
+                      className={`w-full px-4 py-3.5 rounded-2xl border text-sm text-[#161215] placeholder-[#8A7E84] focus:outline-none transition-colors ${
                         errors.name
-                          ? 'border-red-400 focus:ring-red-200'
-                          : 'border-[#E88295]/30 focus:border-[#D96B82] focus:ring-[#D96B82]/20'
+                          ? 'border-red-600 bg-red-50/40'
+                          : 'border-[#E6D6CE] focus:border-[#9E3B52] bg-[#FAF7F5]/60 focus:bg-white'
                       }`}
                     />
+                    {errors.name && <p className="text-red-600 text-xs mt-1">{errors.name}</p>}
                   </div>
-                  {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
-                </div>
 
-                {/* Phone Number */}
-                <div>
-                  <label className="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" htmlFor="phone">
-                    UAE Mobile Number <span className="text-[#BA4961]">*</span>
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-4 top-3.5 text-xs font-bold text-[#BA4961]">+971</span>
-                    <input
-                      id="phone"
-                      type="tel"
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
-                      placeholder="50 915 2969"
-                      className={`w-full pl-14 pr-4 py-3.5 rounded-2xl bg-[#FAF7F5] border text-sm text-[#1E2421] placeholder-[#8A9691] focus:outline-none focus:ring-2 transition ${
-                        errors.phone
-                          ? 'border-red-400 focus:ring-red-200'
-                          : 'border-[#E88295]/30 focus:border-[#D96B82] focus:ring-[#D96B82]/20'
-                      }`}
-                    />
-                  </div>
-                  {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
-                </div>
-
-                {/* If Home Service: Dubai Area & Address */}
-                {serviceType === 'home' && (
-                  <div className="p-4 rounded-2xl bg-[#EDF7EF] border border-[#82AF89]/40 space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-bold text-[#2C4832] uppercase tracking-wider">
-                      <HomeIcon className="w-4 h-4 text-[#4E7A56]" />
-                      <span>Home Delivery Location in Dubai</span>
+                  <div>
+                    <label className="block text-xs uppercase tracking-wider text-[#161215] font-bold mb-2" htmlFor="phone">
+                      UAE Mobile Number <span className="text-[#9E3B52]">*</span>
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-3.5 text-xs font-bold text-[#9E3B52] editorial-num">+971</span>
+                      <input
+                        id="phone"
+                        type="tel"
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                        placeholder="50 915 2969"
+                        className={`w-full pl-14 pr-4 py-3.5 rounded-2xl border text-sm text-[#161215] placeholder-[#8A7E84] focus:outline-none transition-colors editorial-num ${
+                          errors.phone
+                            ? 'border-red-600 bg-red-50/40'
+                            : 'border-[#E6D6CE] focus:border-[#9E3B52] bg-[#FAF7F5]/60 focus:bg-white'
+                        }`}
+                      />
                     </div>
+                    {errors.phone && <p className="text-red-600 text-xs mt-1">{errors.phone}</p>}
+                  </div>
+                </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {/* Home Service Address Fields */}
+                {serviceType === 'home' && (
+                  <div className="p-5 rounded-2xl bg-[#FAF7F5] border border-[#E6D6CE] space-y-4">
+                    <span className="text-xs font-bold text-[#9E3B52] uppercase tracking-wider block">
+                      Dubai Residence or Hotel Suite Details
+                    </span>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-[11px] uppercase tracking-wider text-[#1E2421] font-semibold mb-1">
+                        <label className="block text-xs font-semibold text-[#161215] mb-1.5">
                           Dubai Area
                         </label>
                         <select
                           value={selectedArea}
                           onChange={e => setSelectedArea(e.target.value)}
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#82AF89]/40 text-xs text-[#1E2421] focus:outline-none focus:border-[#2C4832]"
+                          className="w-full px-3.5 py-3 rounded-xl bg-white border border-[#E6D6CE] text-xs text-[#161215] focus:outline-none focus:border-[#9E3B52]"
                         >
                           {DUBAI_AREAS.map(area => (
                             <option key={area} value={area}>{area}</option>
@@ -489,69 +439,84 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
                       </div>
 
                       <div>
-                        <label className="block text-[11px] uppercase tracking-wider text-[#1E2421] font-semibold mb-1">
-                          Building / Villa / Flat No. <span className="text-[#BA4961]">*</span>
+                        <label className="block text-xs font-semibold text-[#161215] mb-1.5">
+                          Building / Villa / Apt No. <span className="text-[#9E3B52]">*</span>
                         </label>
                         <input
                           type="text"
                           value={address}
                           onChange={e => setAddress(e.target.value)}
-                          placeholder="e.g. Villa 14, Al Wasl Road"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#82AF89]/40 text-xs text-[#1E2421] focus:outline-none focus:border-[#2C4832]"
+                          placeholder="e.g. Apt 402, Al Mankhool"
+                          className="w-full px-3.5 py-3 rounded-xl bg-white border border-[#E6D6CE] text-xs text-[#161215] focus:outline-none focus:border-[#9E3B52]"
                         />
                       </div>
                     </div>
-                    {errors.address && <p className="text-red-500 text-xs">{errors.address}</p>}
+                    {errors.address && <p className="text-red-600 text-xs">{errors.address}</p>}
                   </div>
                 )}
 
-                {/* Select Service Dropdown */}
+                {/* Select Service (Includes both Signature Packages & All Fresha A-La-Carte Services) */}
                 <div>
-                  <label className="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" htmlFor="service">
-                    Select Beauty Service <span className="text-[#BA4961]">*</span>
+                  <label className="block text-xs uppercase tracking-wider text-[#161215] font-bold mb-2" htmlFor="service">
+                    Select Beauty Ritual or Package <span className="text-[#9E3B52]">*</span>
                   </label>
                   <select
                     id="service"
                     value={service}
                     onChange={e => setService(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-sm text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition cursor-pointer"
+                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5]/60 focus:bg-white border border-[#E6D6CE] text-sm text-[#161215] focus:outline-none focus:border-[#9E3B52] transition-colors cursor-pointer"
                   >
-                    {SALON_SERVICES.map(s => (
-                      <option key={s.id} value={s.name}>
-                        {s.name} — AED {s.price} ({s.duration})
-                      </option>
+                    {isCustomAlaCarte && (
+                      <option value={service}>{service}</option>
+                    )}
+                    <optgroup label="Featured Packages & Signature Treatments">
+                      {SALON_SERVICES.map(s => (
+                        <option key={s.id} value={s.name}>
+                          {s.name} — AED {s.price} ({s.duration})
+                        </option>
+                      ))}
+                    </optgroup>
+                    {COMPLETE_FRESHA_PRICE_LIST.map(cat => (
+                      <optgroup key={cat.id} label={cat.title}>
+                        {cat.items.map(item => {
+                          const labelVal = `${item.name} (AED ${item.price})`;
+                          return (
+                            <option key={labelVal} value={labelVal}>
+                              {item.name} — AED {item.price} ({item.duration})
+                            </option>
+                          );
+                        })}
+                      </optgroup>
                     ))}
                   </select>
-                  {errors.service && <p className="text-red-500 text-xs mt-1">{errors.service}</p>}
+                  {errors.service && <p className="text-red-600 text-xs mt-1">{errors.service}</p>}
                 </div>
 
-                {/* Date and Time Fields */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Date and Time */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" htmlFor="date">
-                      Preferred Date <span className="text-[#BA4961]">*</span>
+                    <label className="block text-xs uppercase tracking-wider text-[#161215] font-bold mb-2" htmlFor="date">
+                      Preferred Date <span className="text-[#9E3B52]">*</span>
                     </label>
-                    <div className="relative">
-                      <input
-                        id="date"
-                        type="date"
-                        value={date}
-                        onChange={e => setDate(e.target.value)}
-                        className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-sm text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition cursor-pointer"
-                      />
-                    </div>
-                    {errors.date && <p className="text-red-500 text-xs mt-1">{errors.date}</p>}
+                    <input
+                      id="date"
+                      type="date"
+                      value={date}
+                      onChange={e => setDate(e.target.value)}
+                      className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5]/60 focus:bg-white border border-[#E6D6CE] text-sm text-[#161215] focus:outline-none focus:border-[#9E3B52] transition-colors cursor-pointer editorial-num"
+                    />
+                    {errors.date && <p className="text-red-600 text-xs mt-1">{errors.date}</p>}
                   </div>
 
                   <div>
-                    <label className="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" htmlFor="time">
-                      Preferred Time Slot <span className="text-[#BA4961]">*</span>
+                    <label className="block text-xs uppercase tracking-wider text-[#161215] font-bold mb-2" htmlFor="time">
+                      Preferred Time Slot <span className="text-[#9E3B52]">*</span>
                     </label>
                     <select
                       id="time"
                       value={time}
                       onChange={e => setTime(e.target.value)}
-                      className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-sm text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition cursor-pointer"
+                      className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5]/60 focus:bg-white border border-[#E6D6CE] text-sm text-[#161215] focus:outline-none focus:border-[#9E3B52] transition-colors cursor-pointer editorial-num"
                     >
                       {TIME_SLOTS.map(slot => (
                         <option key={slot} value={slot}>
@@ -559,20 +524,20 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
                         </option>
                       ))}
                     </select>
-                    {errors.time && <p className="text-red-500 text-xs mt-1">{errors.time}</p>}
+                    {errors.time && <p className="text-red-600 text-xs mt-1">{errors.time}</p>}
                   </div>
                 </div>
 
-                {/* Preferred Senior Beautician */}
+                {/* Senior Specialist (Real Fresha Staff: Fatima, Savya, Purnam) */}
                 <div>
-                  <label className="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" htmlFor="stylist">
-                    Preferred Senior Beautician (Optional)
+                  <label className="block text-xs uppercase tracking-wider text-[#161215] font-bold mb-2" htmlFor="stylist">
+                    Preferred Beautician (Fresha Verified Staff)
                   </label>
                   <select
                     id="stylist"
                     value={stylist}
                     onChange={e => setStylist(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-sm text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition cursor-pointer"
+                    className="w-full px-4 py-3.5 rounded-2xl bg-[#FAF7F5]/60 focus:bg-white border border-[#E6D6CE] text-sm text-[#161215] focus:outline-none focus:border-[#9E3B52] transition-colors cursor-pointer"
                   >
                     {STYLISTS_LIST.map(b => (
                       <option key={b.id} value={b.id}>
@@ -582,53 +547,65 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
                   </select>
                 </div>
 
-                {/* Real-Time WhatsApp Dispatch Preview */}
-                <div className="p-4 rounded-2xl bg-[#EDF7EF] border border-[#82AF89]/40 text-xs space-y-1.5">
-                  <div className="flex items-center justify-between text-[#2C4832] font-bold text-[11px] uppercase tracking-wider">
-                    <span>WhatsApp Dispatch Preview:</span>
-                    <span className="font-mono text-[#3B6343]">wa.me/{SALON_INFO.whatsappRaw}</span>
+                {/* Live WhatsApp Dispatch Preview */}
+                <div className="p-4 rounded-2xl bg-[#FAF7F5] border border-[#EFE3DD] text-xs space-y-2">
+                  <div className="flex items-center justify-between text-[#5C5055] font-bold text-[10px] uppercase tracking-wider">
+                    <span>WHATSAPP CONCIERGE PREVIEW</span>
+                    <span className="font-mono text-[#1F7A54]">wa.me/{SALON_INFO.whatsappRaw}</span>
                   </div>
-                  <p className="text-[#1E2421] font-mono text-[11.5px] leading-relaxed break-words bg-white p-3 rounded-xl border border-[#82AF89]/25 shadow-2xs">
+                  <p className="text-[#161215] font-mono text-[11.5px] leading-relaxed break-words bg-white p-3.5 rounded-xl border border-[#EFE3DD]">
                     "{previewMessage}"
                   </p>
                 </div>
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  className="w-full py-4 rounded-full rose-gradient-bg text-white font-bold text-xs uppercase tracking-[0.22em] shadow-[0_10px_25px_rgba(217,107,130,0.35)] hover:shadow-[0_15px_35px_rgba(217,107,130,0.5)] active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Confirm Booking via WhatsApp</span>
-                </button>
+                {/* Dual Submit CTAs: WhatsApp + Official Fresha */}
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
+                  <button
+                    type="submit"
+                    className="sm:col-span-8 py-4 px-6 rounded-full rose-gold-gradient text-white font-semibold text-xs uppercase tracking-[0.16em] shadow-lg shadow-[#9E3B52]/20 hover:shadow-[#9E3B52]/35 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Confirm via WhatsApp</span>
+                  </button>
+
+                  <a
+                    href={SALON_INFO.freshaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="sm:col-span-4 py-4 px-4 rounded-full bg-[#FAF7F5] hover:bg-[#161215] text-[#161215] hover:text-white border border-[#E6D6CE] font-semibold text-xs uppercase tracking-[0.12em] transition-all flex items-center justify-center gap-1.5"
+                  >
+                    <span>Fresha 5.0★</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
 
               </form>
 
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </section>
 
-      {/* LIGHTBOX MODAL */}
+      {/* ROUNDED-3XL LIGHTBOX MODAL */}
       {activeLightboxItem && (
         <div 
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-[#130F12]/80 flex items-center justify-center p-4 sm:p-6"
           onClick={() => setActiveLightboxItem(null)}
         >
           <div 
-            className="relative max-w-3xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl border border-[#E88295]/30"
+            className="relative max-w-3xl w-full bg-white p-5 sm:p-7 rounded-[32px] border border-[#E8D8D0] shadow-2xl"
             onClick={e => e.stopPropagation()}
           >
             <button
               onClick={() => setActiveLightboxItem(null)}
-              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition cursor-pointer"
+              className="absolute top-7 right-7 z-10 w-10 h-10 rounded-full bg-[#161215]/85 text-white flex items-center justify-center hover:bg-[#9E3B52] transition-colors cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="h-96 sm:h-[480px] bg-black">
+            <div className="h-96 sm:h-[460px] rounded-2xl overflow-hidden bg-[#EFE6E0]">
               <SafeImage
                 src={activeLightboxItem.image}
                 alt={activeLightboxItem.title}
@@ -637,14 +614,14 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
               />
             </div>
 
-            <div className="p-6 sm:p-8 space-y-3">
-              <span className="text-xs uppercase font-bold tracking-widest text-[#BA4961]">
-                {activeLightboxItem.category}
+            <div className="pt-5 space-y-1.5">
+              <span className="text-[10.5px] uppercase font-bold tracking-[0.2em] text-[#9E3B52] block">
+                {activeLightboxItem.isRealSalonPhoto ? '★ Official Slender Ladies Salon Photo' : activeLightboxItem.category}
               </span>
-              <h3 className="font-serif text-2xl font-bold text-[#1E2421]">
+              <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-[#161215]">
                 {activeLightboxItem.title}
               </h3>
-              <p className="text-sm text-[#52605B] leading-relaxed">
+              <p className="text-sm text-[#5C5055] leading-relaxed">
                 {activeLightboxItem.description}
               </p>
             </div>
@@ -652,51 +629,51 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
         </div>
       )}
 
-      {/* CONFIRMATION MODAL */}
+      {/* ROUNDED-3XL CONFIRMATION MODAL */}
       {submittedBooking && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
-          <div className="max-w-md w-full bg-white rounded-3xl p-8 space-y-6 shadow-2xl border border-[#E88295]/40 text-center relative">
+        <div className="fixed inset-0 z-50 bg-[#130F12]/75 flex items-center justify-center p-4 sm:p-6">
+          <div className="max-w-md w-full bg-white p-8 rounded-[32px] space-y-6 shadow-2xl border border-[#E8D8D0] text-center relative">
             
-            <div className="w-16 h-16 rounded-full bg-[#EDF7EF] border-2 border-[#82AF89] flex items-center justify-center mx-auto text-[#2C4832]">
-              <CheckCircle2 className="w-8 h-8" />
+            <div className="w-14 h-14 rounded-2xl bg-[#1F7A54]/10 border border-[#1F7A54]/25 flex items-center justify-center mx-auto text-[#1F7A54]">
+              <CheckCircle2 className="w-7 h-7" />
             </div>
 
             <div className="space-y-2">
-              <span className="text-xs uppercase tracking-widest font-bold text-[#BA4961]">
-                Reservation Dispatched
+              <span className="text-[10.5px] uppercase tracking-[0.2em] font-bold text-[#9E3B52] block">
+                RESERVATION PREPARED
               </span>
-              <h3 className="font-serif text-2xl font-bold text-[#1E2421]">
-                WhatsApp Window Opened!
+              <h3 className="font-serif text-3xl font-semibold text-[#161215]">
+                Ready for WhatsApp Dispatch
               </h3>
-              <p className="text-xs sm:text-sm text-[#52605B] leading-relaxed">
-                Your booking template was created for <strong>{submittedBooking.details.service}</strong> on <strong>{submittedBooking.details.date}</strong> at <strong>{submittedBooking.details.time}</strong> ({submittedBooking.details.serviceType === 'home' ? 'VIP Home Service' : 'In-Salon Bur Dubai'}).
+              <p className="text-xs sm:text-sm text-[#5C5055] leading-relaxed">
+                Your appointment request for <strong>{submittedBooking.details.service}</strong> on <strong>{submittedBooking.details.date}</strong> at <strong>{submittedBooking.details.time}</strong> ({submittedBooking.details.serviceType === 'home' ? 'VIP Home Service' : 'In-Salon Bur Dubai'}) is ready.
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/20 text-left text-xs font-mono text-[#52605B] space-y-1">
-              <p><strong>Name:</strong> {submittedBooking.details.name}</p>
-              <p><strong>Phone:</strong> +971 {submittedBooking.details.phone}</p>
+            <div className="p-4 rounded-2xl bg-[#FAF7F5] border border-[#EFE3DD] text-left text-xs font-mono text-[#161215] space-y-1">
+              <p><strong>Client:</strong> {submittedBooking.details.name}</p>
+              <p><strong>Mobile:</strong> +971 {submittedBooking.details.phone}</p>
               {submittedBooking.details.address && (
-                <p><strong>Location:</strong> {submittedBooking.details.address}</p>
+                <p><strong>Address:</strong> {submittedBooking.details.address}</p>
               )}
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <a
                 href={submittedBooking.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 rounded-full rose-gradient-bg text-white font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition"
+                className="w-full py-3.5 rounded-full rose-gold-gradient text-white font-semibold text-xs uppercase tracking-[0.18em] shadow-lg flex items-center justify-center gap-2 transition-all"
               >
                 <ExternalLink className="w-4 h-4" />
-                <span>Re-Open WhatsApp Link</span>
+                <span>Open WhatsApp Concierge</span>
               </a>
 
               <button
                 onClick={() => setSubmittedBooking(null)}
-                className="w-full py-3 rounded-full border border-[#52605B]/30 text-xs uppercase tracking-widest font-semibold text-[#52605B] hover:bg-[#FAF7F5] transition"
+                className="w-full py-3 rounded-full border border-[#E6D6CE] text-xs uppercase tracking-[0.16em] font-semibold text-[#5C5055] hover:text-[#161215] hover:bg-[#FAF7F5] transition-colors cursor-pointer"
               >
-                Close & Return
+                Back to Booking Studio
               </button>
             </div>
 

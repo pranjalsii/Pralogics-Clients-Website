@@ -5,20 +5,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  Star, 
   ChevronLeft, 
   ChevronRight, 
-  Quote, 
-  CheckCircle2, 
-  Sparkles, 
-  MapPin, 
-  Home as HomeIcon,
   Pause,
   Play,
-  ExternalLink
+  ArrowUpRight,
+  Star,
+  Quote
 } from 'lucide-react';
 import { TESTIMONIALS, TestimonialItem, SALON_INFO } from '../utils/booking';
-import { motion, AnimatePresence } from 'motion/react';
 import { SafeImage } from './SafeImage';
 
 interface TestimonialSliderProps {
@@ -36,20 +31,18 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ onBookServ
     return item.type === activeFilter;
   });
 
-  // Clamp currentIndex if filter changes
   useEffect(() => {
     if (currentIndex >= filteredTestimonials.length) {
       setCurrentIndex(0);
     }
   }, [activeFilter, filteredTestimonials.length, currentIndex]);
 
-  // Auto-play timer (advances every 5.5 seconds unless paused)
   useEffect(() => {
     if (isPaused || filteredTestimonials.length <= 1) return;
 
     autoPlayRef.current = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % filteredTestimonials.length);
-    }, 5500);
+    }, 6000);
 
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
@@ -68,328 +61,269 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ onBookServ
 
   return (
     <section 
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 space-y-10"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 space-y-10"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       aria-label="Client Testimonials Carousel"
     >
-      {/* Header with Title and Trust Metrics - Subtle Scroll Entrance */}
-      <motion.div 
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2"
-      >
-        <div className="space-y-3 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0F3] border border-[#D96B82]/30 text-[#BA4961] text-xs font-bold uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Verified Client Experiences</span>
-          </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1E2421]">
-            Loved by Dubai Ladies
+      {/* Minimalist Editorial Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#EAE0D9] pb-6">
+        <div className="space-y-2 max-w-2xl">
+          <span className="text-[11px] uppercase tracking-[0.22em] text-[#8E3046] font-bold block">
+            04 · VERIFIED CLIENT STORIES
+          </span>
+          <h2 className="font-serif text-3xl sm:text-5xl font-medium text-[#161314]">
+            Loved by Women Across Dubai
           </h2>
-          <p className="text-[#52605B] text-sm sm:text-base leading-relaxed">
-            Real stories from our Bur Dubai atelier guests and private VIP home service patrons across the UAE.
-          </p>
         </div>
 
-        {/* Aggregate Trust Badge */}
-        <div className="flex items-center gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-[#E88295]/25 shadow-sm self-start md:self-auto">
-          <div className="w-12 h-12 rounded-xl bg-[#EDF7EF] border border-[#82AF89]/40 flex flex-col items-center justify-center text-[#2C4832] shrink-0">
-            <span className="text-base font-bold font-serif leading-none">{SALON_INFO.rating}</span>
-            <div className="flex text-[#D4AF37] mt-0.5">
-              <Star className="w-2.5 h-2.5 fill-[#D4AF37]" />
-            </div>
+        <a
+          href={SALON_INFO.googleMapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center gap-4 text-xs self-start md:self-auto"
+        >
+          <div className="pr-4 border-r border-[#E6DCD5] text-right">
+            <span className="font-serif text-2xl font-semibold text-[#161314] block leading-none editorial-num">
+              {SALON_INFO.rating} ★
+            </span>
           </div>
-          <div className="text-xs">
-            <div className="flex items-center gap-1 font-bold text-[#1E2421]">
-              <span>{SALON_INFO.reviewsCount} Google Reviews</span>
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#4E7A56]" />
-            </div>
-            <p className="text-[11px] text-[#6B7C75]">Google Maps Verified Profile</p>
+          <div>
+            <p className="font-semibold text-[#161314] uppercase tracking-wider editorial-num">
+              {SALON_INFO.reviewsCount}+ Google Reviews
+            </p>
+            <p className="text-[11px] text-[#5C5055] mt-0.5">
+              5.0 ★ on Fresha Dubai
+            </p>
           </div>
-          <a
-            href={SALON_INFO.googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-2 p-2 rounded-lg text-[#BA4961] hover:bg-[#FFF0F3] transition"
-            title="View on Google Maps"
-            aria-label="View Google Maps Reviews"
-          >
-            <ExternalLink className="w-4 h-4" />
-          </a>
-        </div>
-      </motion.div>
+          <ArrowUpRight className="w-4 h-4 text-[#8E3046] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </a>
+      </div>
 
-      {/* Filter Tabs & Navigation Controls Bar */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E88295]/20 pb-4"
-      >
-        {/* Category Filters */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0" role="tablist">
+      {/* Filter Tabs & Carousel Controls */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        
+        <div className="flex flex-wrap items-center gap-2" role="tablist">
           <button
             onClick={() => setActiveFilter('all')}
-            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer editorial-num ${
               activeFilter === 'all'
-                ? 'rose-gradient-bg text-white shadow-sm'
-                : 'bg-white text-[#52605B] border border-[#E88295]/25 hover:border-[#BA4961]'
+                ? 'bg-[#161314] text-white'
+                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
             }`}
           >
-            <span>All Reviews</span>
-            <span className="text-[10px] opacity-80">({TESTIMONIALS.length})</span>
+            All Reviews ({TESTIMONIALS.length})
           </button>
 
           <button
             onClick={() => setActiveFilter('salon')}
-            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
               activeFilter === 'salon'
-                ? 'rose-gradient-bg text-white shadow-sm'
-                : 'bg-white text-[#52605B] border border-[#E88295]/25 hover:border-[#BA4961]'
+                ? 'bg-[#161314] text-white'
+                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
             }`}
           >
-            <span>In-Salon (Bur Dubai)</span>
+            Bur Dubai Salon
           </button>
 
           <button
             onClick={() => setActiveFilter('home')}
-            className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
               activeFilter === 'home'
-                ? 'rose-gradient-bg text-white shadow-sm'
-                : 'bg-white text-[#52605B] border border-[#E88295]/25 hover:border-[#BA4961]'
+                ? 'bg-[#161314] text-white'
+                : 'bg-white text-[#5C5055] border border-[#E6DCD5] hover:text-[#161314]'
             }`}
           >
-            <span>VIP Home Service</span>
+            VIP Home Service
           </button>
         </div>
 
-        {/* Carousel Action Buttons */}
-        <div className="flex items-center gap-3 self-end sm:self-auto">
-          {/* Pause / Play Button */}
+        {/* Navigation Controls */}
+        <div className="flex items-center gap-2 self-end sm:self-auto">
           <button
             onClick={() => setIsPaused(!isPaused)}
-            className="p-2 rounded-full border border-[#E88295]/30 bg-white text-[#52605B] hover:text-[#BA4961] hover:border-[#BA4961] transition cursor-pointer shadow-2xs"
+            className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#5C5055] hover:text-[#8E3046] hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
             title={isPaused ? "Resume auto-slide" : "Pause auto-slide"}
             aria-label={isPaused ? "Resume auto-slide" : "Pause auto-slide"}
           >
             {isPaused ? <Play className="w-3.5 h-3.5 fill-current" /> : <Pause className="w-3.5 h-3.5" />}
           </button>
 
-          {/* Slide Indicator Text */}
-          <span className="text-xs font-semibold text-[#52605B] tracking-wider px-1">
+          <span className="text-xs font-semibold text-[#5C5055] tracking-widest px-2 editorial-num">
             {String(currentIndex + 1).padStart(2, '0')} / {String(filteredTestimonials.length).padStart(2, '0')}
           </span>
 
-          {/* Prev Button */}
           <button
             onClick={handlePrev}
-            className="p-2.5 rounded-full border border-[#E88295]/30 bg-white text-[#1E2421] hover:text-[#BA4961] hover:border-[#BA4961] hover:bg-[#FFF0F3] transition cursor-pointer shadow-2xs active:scale-95"
+            className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#161314] hover:bg-[#8E3046] hover:text-white hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
             aria-label="Previous testimonial"
             title="Previous testimonial"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4" />
           </button>
 
-          {/* Next Button */}
           <button
             onClick={handleNext}
-            className="p-2.5 rounded-full border border-[#E88295]/30 bg-white text-[#1E2421] hover:text-[#BA4961] hover:border-[#BA4961] hover:bg-[#FFF0F3] transition cursor-pointer shadow-2xs active:scale-95"
+            className="w-10 h-10 rounded-full border border-[#E6DCD5] bg-white text-[#161314] hover:bg-[#8E3046] hover:text-white hover:border-[#8E3046] transition-colors flex items-center justify-center cursor-pointer"
             aria-label="Next testimonial"
             title="Next testimonial"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4" />
           </button>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Main Showcase Carousel Card with Scroll Entrance and Slide Transition */}
+      {/* Main Minimalist Review Card */}
       {current && (
-        <motion.div 
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="relative rounded-3xl bg-white border border-[#E88295]/30 shadow-xl overflow-hidden"
-        >
-          {/* Decorative ambient gradient backdrop */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#FFF0F3] via-transparent to-transparent pointer-events-none rounded-bl-full opacity-70" />
-          
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current.id}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="relative p-6 sm:p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-            >
-              
-              {/* Left Column: Client Avatar & Identity Card */}
-              <div className="lg:col-span-4 flex flex-col items-center text-center space-y-4 border-b lg:border-b-0 lg:border-r border-[#E88295]/20 pb-6 lg:pb-0 lg:pr-8">
-                {/* Avatar with luxury layered ring */}
-                <div className="relative group">
-                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-[#BA4961] via-[#D96B82] to-[#82AF89] shadow-lg overflow-hidden">
-                    <SafeImage
-                      src={current.avatar}
-                      alt={current.name}
-                      category="avatar"
-                      className="w-full h-full rounded-full object-cover"
-                    />
-                  </div>
-                  <div className="absolute -bottom-2 -right-1 w-9 h-9 rounded-full bg-white border border-[#E88295]/40 shadow-md flex items-center justify-center text-[#BA4961]">
-                    {current.type === 'home' ? (
-                      <HomeIcon className="w-4 h-4 text-[#2C4832]" />
-                    ) : (
-                      <MapPin className="w-4 h-4 text-[#BA4961]" />
-                    )}
-                  </div>
+        <div className="rounded-[32px] bg-white border border-[#EAE0D9] overflow-hidden">
+          <div
+            key={current.id}
+            className="grid grid-cols-1 lg:grid-cols-12 items-stretch transition-opacity duration-300"
+          >
+            
+            {/* Left Column: Patron Profile (4 Cols) */}
+            <div className="lg:col-span-4 p-7 sm:p-9 bg-[#FAF8F5] border-b lg:border-b-0 lg:border-r border-[#EFE6E0] flex flex-col justify-between space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl overflow-hidden border border-[#E6DCD5] shrink-0">
+                  <SafeImage
+                    src={current.avatar}
+                    alt={current.name}
+                    category="avatar"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-
-                {/* Name & Role */}
                 <div className="space-y-1">
-                  <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#1E2421]">
+                  <h3 className="font-serif text-2xl font-medium text-[#161314] leading-none">
                     {current.name}
                   </h3>
-                  <p className="text-xs text-[#52605B] font-medium flex items-center justify-center gap-1.5">
-                    <span>{current.role}</span>
+                  <p className="text-xs text-[#5C5055]">
+                    {current.role}
                   </p>
-                </div>
-
-                {/* Verified Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDF7EF] border border-[#82AF89]/40 text-[#2C4832] text-[11px] font-bold">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#4E7A56]" />
-                  <span>{current.source}</span>
-                </div>
-
-                {/* Service Tag */}
-                <div className="pt-2 w-full">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#6B7C75] block mb-1">
-                    Experienced Treatment:
-                  </span>
-                  <span className="inline-block px-3 py-1 rounded-full bg-[#FAF7F5] border border-[#E88295]/25 text-xs font-semibold text-[#BA4961]">
-                    {current.serviceUsed}
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-[#8E3046]">
+                    {current.source}
                   </span>
                 </div>
               </div>
 
-              {/* Right Column: Review Quote & Headline */}
-              <div className="lg:col-span-8 space-y-6">
-                
-                {/* Rating Stars & Date */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-[#D4AF37]">
-                    {[...Array(current.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-[#D4AF37]" />
-                    ))}
-                    <span className="ml-2 text-xs font-bold text-[#1E2421]">5.0 Out of 5.0</span>
-                  </div>
+              <div className="divide-y divide-[#EAE0D9] border-t border-[#EAE0D9] text-xs">
+                <div className="py-2.5 flex items-center justify-between text-[#5C5055]">
+                  <span className="uppercase tracking-wider text-[10px] font-semibold">EXPERIENCE</span>
+                  <span className="font-semibold text-[#161314]">
+                    {current.type === 'home' ? 'VIP Home Service' : 'Bur Dubai Salon'}
+                  </span>
+                </div>
+                <div className="py-2.5 flex items-center justify-between text-[#5C5055]">
+                  <span className="uppercase tracking-wider text-[10px] font-semibold">VERIFIED</span>
+                  <span className="editorial-num font-medium">{current.date}</span>
+                </div>
+                <div className="pt-3">
+                  <span className="uppercase tracking-wider text-[10px] font-semibold text-[#7A6C72] block">
+                    TREATMENT BOOKED
+                  </span>
+                  <p className="font-serif text-base font-medium text-[#8E3046] mt-0.5">
+                    {current.serviceUsed}
+                  </p>
+                </div>
+              </div>
+            </div>
 
-                  <div className="text-[11px] text-[#6B7C75] font-medium">
-                    {current.date}
+            {/* Right Column: Review Quote & Action (8 Cols) */}
+            <div className="lg:col-span-8 p-7 sm:p-10 lg:p-12 flex flex-col justify-between space-y-6 relative">
+              <Quote className="w-10 h-10 text-[#8E3046]/10 absolute top-6 right-8 pointer-events-none" />
+
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-0.5 text-[#D97706]">
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    <Star className="w-3.5 h-3.5 fill-current" />
+                    <Star className="w-3.5 h-3.5 fill-current" />
                   </div>
+                  <span className="text-xs font-semibold text-[#161314]">5.0 Verified Client Rating</span>
                 </div>
 
-                {/* Headline */}
-                <div className="relative">
-                  <Quote className="absolute -top-3 -left-3 sm:-left-5 w-8 h-8 text-[#BA4961]/15 -z-10" />
-                  <h4 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-[#1E2421] leading-snug">
-                    “{current.headline}”
-                  </h4>
-                </div>
+                <h4 className="font-serif text-2xl sm:text-3xl font-medium text-[#161314] leading-snug">
+                  “{current.headline}”
+                </h4>
 
-                {/* Detailed Quote */}
-                <p className="text-sm sm:text-base text-[#52605B] leading-relaxed italic">
-                  "{current.quote}"
+                <p className="text-sm sm:text-base text-[#5C5055] leading-[1.8]">
+                  “{current.quote}”
                 </p>
+              </div>
 
-                {/* Action Buttons */}
-                <div className="pt-4 flex flex-wrap items-center gap-4">
-                  {onBookService && (
-                    <button
-                      onClick={() => onBookService(current.serviceUsed)}
-                      className="px-6 py-2.5 rounded-full rose-gradient-bg text-white text-xs uppercase tracking-widest font-bold shadow-xs hover:shadow-md transition active:scale-95 cursor-pointer"
-                    >
-                      Book This Service
-                    </button>
-                  )}
+              <div className="pt-5 border-t border-[#EFE6E0] flex flex-wrap items-center justify-between gap-4">
+                {onBookService && (
+                  <button
+                    onClick={() => onBookService(current.serviceUsed)}
+                    className="px-6 py-3 rounded-full rose-gold-gradient text-white text-xs uppercase tracking-wider font-semibold transition-all cursor-pointer flex items-center gap-1.5"
+                  >
+                    <span>Book This Treatment</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
+
+                <div className="flex flex-wrap items-center gap-4">
+                  <a
+                    href={SALON_INFO.freshaVenueUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-semibold text-[#8E3046] hover:underline flex items-center gap-1 transition-colors"
+                  >
+                    <span>Fresha 5.0★ Reviews</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
                   <a
                     href={SALON_INFO.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-5 py-2.5 rounded-full border border-[#82AF89]/50 text-[#2C4832] bg-[#EDF7EF]/50 hover:bg-[#EDF7EF] text-xs uppercase tracking-widest font-bold transition flex items-center gap-1.5"
+                    className="text-xs font-semibold text-[#5C5055] hover:text-[#8E3046] flex items-center gap-1 transition-colors"
                   >
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span>Verify on Google Maps</span>
+                    <span>Google Maps ({SALON_INFO.reviewsCount}+)</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                 </div>
-
               </div>
+            </div>
 
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
+          </div>
+        </div>
       )}
 
-      {/* Direct Jump Thumbnails & Pagination Dots - Subtle Scroll Entrance */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="flex flex-col items-center gap-4"
-      >
-        {/* Client Thumbnail Quick Jump */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
-          {filteredTestimonials.map((item, idx) => {
-            const isActive = idx === currentIndex;
-            return (
-              <motion.button
-                key={item.id}
-                onClick={() => setCurrentIndex(idx)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`flex items-center gap-2 px-2.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-white border-2 border-[#BA4961] shadow-md scale-105'
-                    : 'bg-white/70 border border-[#E88295]/25 hover:border-[#BA4961]/50 opacity-80 hover:opacity-100'
-                }`}
-                title={`Read review by ${item.name}`}
-                aria-label={`Jump to review by ${item.name}`}
-              >
-                <SafeImage
-                  src={item.avatar}
-                  alt={item.name}
-                  category="avatar"
-                  className="w-6 h-6 rounded-full object-cover shrink-0"
-                />
-                <span className={`text-[11px] font-semibold hidden md:inline ${isActive ? 'text-[#BA4961]' : 'text-[#52605B]'}`}>
-                  {item.name.split(' ')[0]}
-                </span>
-              </motion.button>
-            );
-          })}
-        </div>
-
-        {/* Indicator Dots */}
-        <div className="flex items-center gap-2">
-          {filteredTestimonials.map((_, idx) => (
+      {/* Patron Selector Tabs */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+        {filteredTestimonials.map((item, idx) => {
+          const isActive = idx === currentIndex;
+          const initials = item.name.split(' ').map(n => n[0]).join('').slice(0, 2);
+          return (
             <button
-              key={idx}
+              key={item.id}
               onClick={() => setCurrentIndex(idx)}
-              className={`h-2 rounded-full transition-all cursor-pointer ${
-                idx === currentIndex
-                  ? 'w-8 bg-[#BA4961]'
-                  : 'w-2 bg-[#E88295]/40 hover:bg-[#BA4961]/60'
+              className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex items-center gap-2.5 ${
+                isActive
+                  ? 'border-[#8E3046] bg-white shadow-2xs'
+                  : 'border-[#EAE0D9] bg-white/60 hover:bg-white'
               }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </motion.div>
+              title={`Read review by ${item.name}`}
+              aria-label={`Jump to review by ${item.name}`}
+            >
+              <div className={`w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-[11px] font-bold ${
+                isActive ? 'bg-[#8E3046] text-white' : 'bg-[#EFE6E0] text-[#8E3046]'
+              }`}>
+                {initials}
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-[#161314] truncate">
+                  {item.name}
+                </p>
+                <p className="text-[10px] text-[#7A6C72] truncate">
+                  {item.role}
+                </p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
     </section>
   );
 };
