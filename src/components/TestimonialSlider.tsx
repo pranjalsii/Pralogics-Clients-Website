@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { TESTIMONIALS, TestimonialItem, SALON_INFO } from '../utils/booking';
 import { motion, AnimatePresence } from 'motion/react';
+import { SafeImage } from './SafeImage';
 
 interface TestimonialSliderProps {
   onBookService?: (serviceName?: string) => void;
@@ -231,10 +232,11 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ onBookServ
               <div className="lg:col-span-4 flex flex-col items-center text-center space-y-4 border-b lg:border-b-0 lg:border-r border-[#E88295]/20 pb-6 lg:pb-0 lg:pr-8">
                 {/* Avatar with luxury layered ring */}
                 <div className="relative group">
-                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-[#BA4961] via-[#D96B82] to-[#82AF89] shadow-lg">
-                    <img
+                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-[#BA4961] via-[#D96B82] to-[#82AF89] shadow-lg overflow-hidden">
+                    <SafeImage
                       src={current.avatar}
                       alt={current.name}
+                      category="avatar"
                       className="w-full h-full rounded-full object-cover"
                     />
                   </div>
@@ -358,10 +360,11 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ onBookServ
                 title={`Read review by ${item.name}`}
                 aria-label={`Jump to review by ${item.name}`}
               >
-                <img
+                <SafeImage
                   src={item.avatar}
                   alt={item.name}
-                  className="w-6 h-6 rounded-full object-cover"
+                  category="avatar"
+                  className="w-6 h-6 rounded-full object-cover shrink-0"
                 />
                 <span className={`text-[11px] font-semibold hidden md:inline ${isActive ? 'text-[#BA4961]' : 'text-[#52605B]'}`}>
                   {item.name.split(' ')[0]}

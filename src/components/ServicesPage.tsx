@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { SALON_SERVICES, formatPrice, ServiceItem } from '../utils/booking';
 import { Clock, Check, Sparkles, ArrowRight, Leaf, Home as HomeIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { SafeImage } from './SafeImage';
 
 interface ServicesPageProps {
   onSelectServiceAndBook: (serviceName: string) => void;
@@ -84,12 +85,13 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onSelectServiceAndBo
             >
               {/* Image & Badges */}
               <div className="relative h-64 overflow-hidden bg-[#FAF7F5]">
-                <img
+                <SafeImage
                   src={service.image}
                   alt={service.name}
+                  category={service.category as any}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 filter contrast-[1.03]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent pointer-events-none" />
                 
                 {service.badge && (
                   <div className="absolute top-4 left-4 bg-white/95 text-[#BA4961] border border-[#D96B82]/30 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-md backdrop-blur-sm">

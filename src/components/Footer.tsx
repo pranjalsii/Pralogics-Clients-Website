@@ -16,7 +16,11 @@ import {
   Calendar,
   Clock,
   Sparkles,
-  Award
+  Award,
+  ShieldCheck,
+  Heart,
+  CheckCircle2,
+  Navigation
 } from 'lucide-react';
 import { SALON_INFO } from '../utils/booking';
 
@@ -25,6 +29,29 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const trustPillars = [
+    {
+      icon: ShieldCheck,
+      title: '100% Women-Only',
+      description: 'Private chambers, total privacy & certified female beauticians'
+    },
+    {
+      icon: Sparkles,
+      title: 'Authentic Luxury Brands',
+      description: 'French Dr. Renaud Paris, Italian Rica, Olaplex & OPI'
+    },
+    {
+      icon: CheckCircle2,
+      title: 'Sterilized Hygiene',
+      description: 'Single-use disposable towels & Dubai Municipality standard'
+    },
+    {
+      icon: Award,
+      title: 'VIP Home Service',
+      description: 'Doorstep concierge dispatched anywhere across Dubai'
+    }
+  ];
+
   const socialLinks = [
     {
       name: 'WhatsApp Concierge',
@@ -83,31 +110,49 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <footer className="border-t border-[#E88295]/20 bg-[#F9F6F4] pt-20 pb-12 px-4 sm:px-6 lg:px-12 relative text-[#1E2421]">
+    <footer className="border-t border-[#E88295]/20 bg-gradient-to-b from-[#FAF7F5] via-[#FFFBF9] to-[#F5ECE9] pt-16 pb-12 px-4 sm:px-6 lg:px-12 relative text-[#1E2421]">
       <div className="max-w-7xl mx-auto space-y-16">
         
-        {/* Top 4-Column Grid */}
+        {/* TOP TRUST & EXCELLENCE PILLARS (5-STAR ASSURANCE) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 sm:p-8 rounded-3xl bg-white border border-[#E88295]/25 shadow-sm">
+          {trustPillars.map((pillar, idx) => {
+            const Icon = pillar.icon;
+            return (
+              <div key={idx} className="flex items-start gap-3.5 p-2">
+                <div className="w-10 h-10 rounded-2xl bg-[#FFF0F3] border border-[#D96B82]/30 flex items-center justify-center text-[#BA4961] shrink-0 shadow-2xs">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E2421]">{pillar.title}</h4>
+                  <p className="text-[11px] text-[#52605B] mt-0.5 leading-relaxed">{pillar.description}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* MAIN 4-COLUMN LUXURY FOOTER GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
           
           {/* Col 1: Brand Identity & Verification */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full border border-[#D96B82]/40 flex items-center justify-center bg-white shadow-xs">
-                <span className="font-cinzel text-[#BA4961] text-lg font-bold">S</span>
+              <div className="w-11 h-11 rounded-2xl border border-[#D96B82]/40 flex items-center justify-center bg-white shadow-xs">
+                <span className="font-cinzel text-[#BA4961] text-xl font-bold">S</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-cinzel tracking-[0.22em] text-lg font-bold text-[#1E2421]">
                   SLENDER LADIES SALON
                 </span>
                 <span className="text-[9px] tracking-[0.3em] text-[#52605B] uppercase font-semibold flex items-center gap-1">
-                  <span>Dubai · Salon & VIP Home Service</span>
+                  <span>Dubai · Atelier & VIP Home Concierge</span>
                   <Leaf className="w-2.5 h-2.5 text-[#82AF89]" />
                 </span>
               </div>
             </div>
 
             <p className="text-xs sm:text-sm text-[#52605B] max-w-sm leading-relaxed">
-              Dubai’s trusted ladies sanctuary for French Dr. Renaud facials, Rica waxing, organic threading, traditional Moroccan hammam, and doorstep VIP home services across Dubai.
+              Dubai’s acclaimed ladies sanctuary for French Dr. Renaud facials, Italian Rica waxing, organic threading, authentic Moroccan hammam rituals, and 5-star doorstep beauty pampering across Dubai.
             </p>
 
             {/* Quick Ratings & Verification Badges */}
@@ -117,9 +162,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="View verified reviews on Google Maps"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#82AF89]/40 text-[#2C4832] text-xs font-semibold shadow-2xs hover:border-[#4E7A56] transition"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#82AF89]/40 text-[#2C4832] text-xs font-semibold shadow-2xs hover:border-[#4E7A56] hover:bg-[#EDF7EF] transition"
               >
-                <span className="text-amber-500 font-bold">★</span>
+                <span className="text-[#D4AF37] font-bold">★</span>
                 <span>Google: {SALON_INFO.rating} ({SALON_INFO.reviewsCount} Reviews)</span>
               </a>
 
@@ -128,24 +173,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="View verified rating on Fresha"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E88295]/40 text-[#BA4961] text-xs font-semibold shadow-2xs hover:border-[#BA4961] transition"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#E88295]/40 text-[#BA4961] text-xs font-semibold shadow-2xs hover:border-[#BA4961] hover:bg-[#FFF0F3] transition"
               >
                 <Award className="w-3.5 h-3.5 text-[#BA4961]" />
                 <span>Fresha: 5.0 ★ Top Rated</span>
               </a>
             </div>
 
-            <p className="text-[11px] text-[#52605B]">
-              <span className="font-semibold text-[#1E2421]">Hours:</span> {SALON_INFO.hoursDaily}
-            </p>
+            {/* Working Hours with Live Status */}
+            <div className="flex items-center gap-2 text-xs text-[#52605B] pt-1">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#82AF89] animate-pulse" />
+              <span className="font-semibold text-[#1E2421]">Working Hours:</span>
+              <span>{SALON_INFO.hoursDaily}</span>
+            </div>
           </div>
 
-          {/* Col 2: Navigation Links */}
+          {/* Col 2: Navigation & Popular Rituals */}
           <div className="lg:col-span-2 space-y-4">
             <h5 className="text-xs uppercase tracking-[0.25em] font-bold text-[#1E2421]">
-              Navigation
+              Quick Links
             </h5>
-            <ul className="space-y-3 text-xs text-[#52605B]">
+            <ul className="space-y-2.5 text-xs text-[#52605B]">
               <li>
                 <button
                   onClick={() => onNavigate('home')}
@@ -159,7 +207,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate('services')}
                   className="hover:text-[#BA4961] transition cursor-pointer text-left font-medium"
                 >
-                  Services
+                  Bespoke Menu & AED Prices
                 </button>
               </li>
               <li>
@@ -173,7 +221,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   }}
                   className="hover:text-[#BA4961] transition cursor-pointer text-left font-medium"
                 >
-                  Gallery
+                  Photo Gallery
                 </button>
               </li>
               <li>
@@ -187,37 +235,48 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   }}
                   className="hover:text-[#BA4961] transition cursor-pointer text-left text-[#BA4961] font-bold"
                 >
-                  Booking
+                  Book Appointment
                 </button>
               </li>
               <li>
                 <a
-                  href={`https://wa.me/${SALON_INFO.whatsappRaw}?text=${encodeURIComponent("Hi Slender Ladies Salon, I would like to book home service.")}`}
+                  href={`https://wa.me/${SALON_INFO.whatsappRaw}?text=${encodeURIComponent("Hi Slender Ladies Salon, I would like to book VIP Home Service.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#2C4832] transition cursor-pointer text-[#2C4832] font-semibold flex items-center gap-1"
                 >
-                  <span>VIP Home Service</span>
+                  <span>VIP Home Concierge</span>
                   <ExternalLink className="w-3 h-3 text-[#4E7A56]" />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={SALON_INFO.freshaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#BA4961] transition cursor-pointer text-[#BA4961] font-semibold flex items-center gap-1"
+                >
+                  <span>Fresha Instant Booking</span>
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Col 3: Atelier Location & Contact */}
+          {/* Col 3: Bur Dubai Atelier Location & Contact */}
           <div className="lg:col-span-3 space-y-4">
             <h5 className="text-xs uppercase tracking-[0.25em] font-bold text-[#1E2421]">
               Bur Dubai Atelier
             </h5>
             <div className="space-y-2 text-xs text-[#52605B]">
               <p className="text-[#1E2421] font-semibold">
-                Shop No. 6, Majed Bin Sultan Building
+                Shop No. 6, Ground Floor, Majed Bin Sultan Building
               </p>
               <p className="leading-relaxed">
                 22 3A Street, Al Souq Al Kabeer, Al Fahidi, Bur Dubai, Dubai, UAE
               </p>
-              <p className="text-[#BA4961] font-medium text-[11px]">
-                Near Meena Bazaar & Al Ghubaiba Metro
+              <p className="text-[#BA4961] font-semibold text-[11px]">
+                Near Meena Bazaar & Al Ghubaiba Metro Station
               </p>
               <p className="text-[#2C4832] font-medium text-[11px]">
                 Plus Code: {SALON_INFO.plusCode}
@@ -226,7 +285,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <div className="pt-2 space-y-1.5 border-t border-[#E88295]/20">
                 <p>
                   <span className="text-[#1E2421] font-bold">Landline:</span>{' '}
-                  <a href={`tel:${SALON_INFO.phone}`} className="hover:text-[#BA4961] font-medium transition">
+                  <a href={`tel:${SALON_INFO.phone}`} className="hover:text-[#BA4961] font-semibold transition">
                     {SALON_INFO.phone}
                   </a>
                 </p>
@@ -250,21 +309,21 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs text-[#2C4832] hover:text-[#1E2421] font-bold underline"
                 >
-                  <MapPin className="w-3.5 h-3.5 text-[#4E7A56]" />
+                  <Navigation className="w-3.5 h-3.5 text-[#4E7A56]" />
                   <span>Get Driving Directions on Google Maps ↗</span>
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Col 4: Connect & Social Media (Direct Working Links) */}
+          {/* Col 4: Verified Social Profiles & Direct Redirection */}
           <div className="lg:col-span-3 space-y-4">
             <h5 className="text-xs uppercase tracking-[0.25em] font-bold text-[#1E2421] flex items-center gap-1.5">
-              <span>Connect With Us</span>
+              <span>Connect & Follow</span>
               <Sparkles className="w-3.5 h-3.5 text-[#BA4961]" />
             </h5>
             <p className="text-xs text-[#52605B]">
-              Follow our official channels for daily beauty updates, before & after transformations, and exclusive seasonal promotions.
+              Follow our verified channels for daily beauty transformations, bridal packages, and exclusive seasonal promotions.
             </p>
 
             <div className="grid grid-cols-1 gap-2 pt-1">
@@ -296,14 +355,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
         </div>
 
-        {/* Dedicated Social Media Banner Bar */}
+        {/* DEDICATED SOCIAL MEDIA ACTION BAR (INSTANT CLICK REDIRECTION) */}
         <div className="p-4 sm:p-6 rounded-2xl bg-white border border-[#E88295]/30 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-[#FFF0F3] border border-[#E88295]/40 flex items-center justify-center text-[#BA4961]">
+            <div className="w-9 h-9 rounded-full bg-[#FFF0F3] border border-[#E88295]/40 flex items-center justify-center text-[#BA4961] shrink-0">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs font-bold text-[#1E2421]">Instant Direct Redirection & Concierge</p>
+              <p className="text-xs font-bold text-[#1E2421]">Instant Direct Redirection & Online Concierge</p>
               <p className="text-[11px] text-[#52605B]">Click any channel to open our verified official profile or chat directly with our team.</p>
             </div>
           </div>
@@ -366,7 +425,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EDF7EF] border border-[#82AF89]/50 text-[#2C4832] text-xs font-bold hover:bg-[#E0F3E3] transition shadow-2xs"
             >
               <MapPin className="w-3.5 h-3.5 text-[#4E7A56]" />
-              <span>Google Maps (4.8★)</span>
+              <span>Google Maps ({SALON_INFO.reviewsCount} Reviews)</span>
             </a>
 
             {/* Fresha */}
@@ -378,14 +437,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF0F3] border border-[#E88295]/40 text-[#BA4961] text-xs font-bold hover:bg-[#FFE3E8] transition shadow-2xs"
             >
               <Calendar className="w-3.5 h-3.5 text-[#BA4961]" />
-              <span>Fresha</span>
+              <span>Fresha (5.0★)</span>
             </a>
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* BOTTOM COPYRIGHT & LEGAL BAR */}
         <div className="pt-8 border-t border-[#E88295]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#52605B]">
-          <p>© 2026 Slender Ladies Salon Dubai. All Rights Reserved. Powered by Pralogics.</p>
+          <p>© 2026 Slender Ladies Salon Dubai. All Rights Reserved. Licensed by Dubai Economy & Tourism.</p>
           
           <div className="flex flex-wrap items-center gap-4 text-[#52605B]">
             <a
@@ -404,7 +463,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               rel="noopener noreferrer"
               className="hover:text-[#BA4961] transition flex items-center gap-1 font-medium"
             >
-              <MapPin className="w-3 h-3 text-[#4E7A56]" />
+              <MapPin className="w-3.5 h-3.5 text-[#4E7A56]" />
               <span>Google Maps (131 Reviews)</span>
             </a>
             <span className="text-[#E88295]/40">•</span>
@@ -414,7 +473,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               rel="noopener noreferrer"
               className="hover:text-[#BA4961] transition flex items-center gap-1 font-medium"
             >
-              <Instagram className="w-3 h-3 text-[#DD2A7B]" />
+              <Instagram className="w-3.5 h-3.5 text-[#DD2A7B]" />
               <span>Instagram</span>
             </a>
             <span className="text-[#E88295]/40">•</span>
@@ -424,7 +483,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               rel="noopener noreferrer"
               className="hover:text-[#BA4961] transition flex items-center gap-1 font-medium"
             >
-              <Linkedin className="w-3 h-3 text-[#0A66C2]" />
+              <Linkedin className="w-3.5 h-3.5 text-[#0A66C2]" />
               <span>LinkedIn</span>
             </a>
           </div>

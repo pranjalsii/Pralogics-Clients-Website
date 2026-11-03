@@ -33,6 +33,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { SafeImage } from './SafeImage';
 
 interface GalleryBookingPageProps {
   initialService?: string;
@@ -223,12 +224,13 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
               onClick={() => setActiveLightboxItem(item)}
               className="group relative rounded-3xl overflow-hidden bg-white border border-[#E88295]/20 h-80 cursor-pointer shadow-md transition-shadow duration-300 hover:shadow-2xl"
             >
-              <img
+              <SafeImage
                 src={item.image}
                 alt={item.title}
+                category={item.category as any}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter contrast-[1.02]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition-opacity pointer-events-none" />
               
               <div className="absolute inset-0 p-6 flex flex-col justify-end">
                 <span className="text-[10px] uppercase font-bold tracking-widest text-[#F7D6DE]">
@@ -627,9 +629,10 @@ export const GalleryBookingPage: React.FC<GalleryBookingPageProps> = ({ initialS
             </button>
 
             <div className="h-96 sm:h-[480px] bg-black">
-              <img
+              <SafeImage
                 src={activeLightboxItem.image}
                 alt={activeLightboxItem.title}
+                category={activeLightboxItem.category as any}
                 className="w-full h-full object-cover"
               />
             </div>

@@ -84,9 +84,9 @@ export const SALON_SERVICES: ServiceItem[] = [
     name: 'Herbal Fruit Clean-Up & Radiant Glow',
     category: 'skin',
     price: 55,
-    duration: '35 Mins',
-    badge: 'Popular Choice',
-    shortDesc: 'Gentle pore cleansing with cold-pressed natural fruit enzymes, clarifying steam, exfoliation, and a refreshing cucumber soothing masque.',
+    duration: '45 Mins',
+    badge: 'Popular Choice · AED 55',
+    shortDesc: 'Gentle pore cleansing with cold-pressed natural fruit enzymes, clarifying steam, exfoliation, blackhead extraction, and a refreshing cucumber soothing masque.',
     included: [
       'Pore deep cleansing & botanical steam',
       'Natural fruit enzyme scrub exfoliation',
@@ -101,7 +101,7 @@ export const SALON_SERVICES: ServiceItem[] = [
     category: 'skin',
     price: 160,
     duration: '60 Mins',
-    badge: 'Signature Facial',
+    badge: 'Signature Facial · AED 160',
     shortDesc: 'French luxury botanical facial therapy targeting uneven tone, fatigue, and dullness with organic raspberry extracts and anti-aging peptides.',
     included: [
       'Double cleansing with French organic milk & lotion',
@@ -115,9 +115,9 @@ export const SALON_SERVICES: ServiceItem[] = [
     id: 'gold-diamond-facial',
     name: '24K Gold & Diamond Luxury Polishing Facial',
     category: 'skin',
-    price: 220,
+    price: 200,
     duration: '75 Mins',
-    badge: 'VIP Bridal Care',
+    badge: 'Bridal Royal Care · AED 200',
     shortDesc: 'The ultimate royal skin indulgence infused with microscopic diamond dust and pure 24K gold foil for instant bridal luminescence and collagen firming.',
     included: [
       'Micro-diamond dermabrasion polish',
@@ -132,12 +132,12 @@ export const SALON_SERVICES: ServiceItem[] = [
     name: 'Full Face Threading & Eyebrow Architecture',
     category: 'waxing',
     price: 89,
-    duration: '30 Mins',
-    badge: 'Daily Favorite',
-    shortDesc: 'Hypoallergenic organic thread sculpting for precise eyebrow symmetry, forehead, upper lip, chin, and sides with calming aloe vera gel finish.',
+    duration: '40 Mins',
+    badge: 'Fresha Verified · AED 89',
+    shortDesc: 'Hypoallergenic organic thread sculpting for precise eyebrow symmetry (AED 29 individually), upper lip (AED 19), chin, and forehead with calming aloe vera gel finish.',
     included: [
       'Facial cranial mapping for ideal brow curvature',
-      'Full face threading (brows, upper lip, chin, sides)',
+      'Full face threading (eyebrows, upper lip, chin, sides)',
       'High-frequency anti-bump antiseptic treatment',
       'Chilled organic aloe vera & rose water compress'
     ],
@@ -145,19 +145,19 @@ export const SALON_SERVICES: ServiceItem[] = [
   },
   {
     id: 'rica-waxing-full',
-    name: 'Full Body Silky Rica Waxing Ritual',
+    name: 'Italian Rica Liposoluble Full Body Waxing',
     category: 'waxing',
-    price: 190,
+    price: 160,
     duration: '60 Mins',
-    badge: 'Silky Smooth',
-    shortDesc: 'Italian Rica liposoluble waxing infused with titanium dioxide and zinc oxide for painless, silky-soft results on sensitive skin.',
+    badge: 'Silky Smooth · AED 160',
+    shortDesc: 'Italian Rica liposoluble waxing infused with titanium dioxide and zinc oxide for painless, silky-soft results on delicate skin without redness.',
     included: [
       'Full arms, full legs & underarms waxing',
       'Italian Rica white chocolate / avocado formulation',
       'Pre-wax antiseptic lotion & powder preparation',
       'Post-wax soothing argan oil massage to prevent ingrowns'
     ],
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1000&auto=format&fit=crop'
   },
   {
     id: 'haircut-blowdry',
@@ -165,7 +165,7 @@ export const SALON_SERVICES: ServiceItem[] = [
     category: 'hair',
     price: 120,
     duration: '45 Mins',
-    badge: 'Stylist Choice',
+    badge: 'Stylist Choice · AED 120',
     shortDesc: 'Custom hair consultation, architectural layered haircut tailored to face shape, botanical shampoo wash, and bouncy Moroccan blowdry styling.',
     included: [
       'Personalized texture & face shape consultation',
@@ -181,7 +181,7 @@ export const SALON_SERVICES: ServiceItem[] = [
     category: 'hair',
     price: 350,
     duration: '120 Mins',
-    badge: 'Frizz-Free',
+    badge: 'Frizz-Free Shield · AED 350',
     shortDesc: 'Formaldehyde-free deep protein restructuring treatment that eliminates 99% of Dubai humidity frizz, leaving hair glossy and manageable for up to 6 months.',
     included: [
       'Clarifying detox wash & microscopic cuticle prep',
@@ -195,9 +195,9 @@ export const SALON_SERVICES: ServiceItem[] = [
     id: 'moroccan-bath',
     name: 'Traditional Royal Moroccan Bath (Hammam)',
     category: 'hammam',
-    price: 210,
+    price: 180,
     duration: '60 Mins',
-    badge: 'Deep Detox',
+    badge: 'Deep Detox · AED 180',
     shortDesc: 'Authentic steamy Hammam ritual using olive-derived black soap, deep Kessa glove exfoliation to remove dead skin, and mineral-rich Ghassoul clay wrap.',
     included: [
       'Private eucalyptus aromatherapy steam chamber',
@@ -211,10 +211,10 @@ export const SALON_SERVICES: ServiceItem[] = [
     id: 'spa-mani-pedi',
     name: 'Classic Spa Manicure & Pedicure Ritual',
     category: 'nails',
-    price: 90,
+    price: 85,
     duration: '50 Mins',
-    badge: 'Pampering',
-    shortDesc: 'Aromatic sea-salt foot soak, cuticle detailing, calluses smoothing, nourishing hand massage, and flawless polish application with top coat.',
+    badge: 'Pampering · AED 85',
+    shortDesc: 'Aromatic sea-salt foot soak, cuticle detailing, calluses smoothing, nourishing hand massage, and flawless polish application with long-wear top coat.',
     included: [
       'Dead Sea lavender salt bath & whirlpool soak',
       'Precision nail shaping, buffing, and cuticle care',
@@ -224,20 +224,36 @@ export const SALON_SERVICES: ServiceItem[] = [
     image: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=1000&auto=format&fit=crop'
   },
   {
-    id: 'glow-queen-combo',
-    name: 'The Dubai Glow Queen Package (Full Combo)',
+    id: 'full-transformation-bundle',
+    name: 'Full Transformation Bundle (Fresha Top Seller)',
     category: 'home',
-    price: 320,
-    duration: '120 Mins',
-    badge: 'Best Value Bundle',
-    shortDesc: 'Our most requested package available both in-salon and at your doorstep: Full arms & legs waxing, full face threading, fruit clean-up, and spa mani-pedi.',
+    price: 350,
+    duration: '240 Mins',
+    badge: 'Fresha Deal · AED 350 (Was 549)',
+    shortDesc: 'Official Fresha best-seller bundle: Full hand, full leg, and underarm wax, upper lip & eyebrow threading, luxury Diamond facial, and classic mani-pedi.',
     included: [
-      'Full arms, underarms & full legs waxing',
-      'Full face threading with eyebrow shaping',
-      'Herbal fruit glow facial clean-up',
-      'Classic spa manicure & pedicure with polish'
+      'Full hand, full leg & underarm silky waxing',
+      'Precision upper lip & eyebrow shaping threading',
+      'Luxury Diamond skin radiance facial',
+      'Complete classic spa manicure & pedicure'
     ],
     image: 'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=1000&auto=format&fit=crop'
+  },
+  {
+    id: 'gold-combo-bundle',
+    name: 'Gold Facial & Full Body Combo Bundle',
+    category: 'home',
+    price: 304,
+    duration: '195 Mins',
+    badge: 'Special Combo · AED 304',
+    shortDesc: 'Fresha verified package including 24K gold glowing facial, eyebrow threading, classic mani-pedi, half-leg wax, and bikini waxing at high savings.',
+    included: [
+      'Pure 24K Gold luxury luminescence facial',
+      'Eyebrow symmetry shaping & thread sculpting',
+      'Classic spa manicure and pedicure',
+      'Half legs wax and hygienic bikini wax'
+    ],
+    image: 'https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&w=1000&q=80'
   },
   {
     id: 'doorstep-home-service',
@@ -245,7 +261,7 @@ export const SALON_SERVICES: ServiceItem[] = [
     category: 'home',
     price: 250,
     duration: 'Custom Duration',
-    badge: 'At-Home Luxury',
+    badge: 'Doorstep Concierge · From AED 250',
     shortDesc: 'Enjoy full five-star salon amenities directly in the comfort of your Dubai home, villa, or hotel. Available across Bur Dubai, Downtown, Jumeirah, Marina, and Deira.',
     included: [
       'Sanitized mobile salon equipment & disposable kits',
@@ -253,7 +269,7 @@ export const SALON_SERVICES: ServiceItem[] = [
       'Flexible bundling of waxing, facials, hair & nails',
       'Zero travel hassle with direct WhatsApp coordination'
     ],
-    image: 'https://images.unsplash.com/photo-1522337094345-8613e3f74b4b?q=80&w=1000&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80'
   }
 ];
 
@@ -299,8 +315,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: 'gal-6',
     title: 'Bur Dubai Atelier Interior',
     category: 'interior',
-    description: 'Peaceful private ladies sanctuary with plush velvet seating.',
-    image: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1000&auto=format&fit=crop'
+    description: 'Peaceful private ladies sanctuary with plush velvet seating and golden mirrors.',
+    image: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=1000&auto=format&fit=crop'
   },
   {
     id: 'gal-7',
