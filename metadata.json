@@ -1,0 +1,6 @@
+{
+  "name": "The Royal Cut - Luxury Barber Salon",
+  "description": "Experience the pinnacle of luxury grooming tailored for the modern gentleman with The Royal Cut. Ultra-premium midnight dark mode with custom styling, bespoke services, and instant booking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

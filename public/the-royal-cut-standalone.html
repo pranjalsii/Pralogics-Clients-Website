@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slender Ladies Salon | Luxury Beauty & VIP Home Service Dubai</title>
+  <meta name="description" content="Experience premier ladies grooming, French Dr. Renaud facials, Rica waxing, Moroccan bath, and VIP doorstep home service across Dubai. Located at Meena Bazaar, Bur Dubai.">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              pearl: '#FAF7F5',
+              white: '#FFFFFF',
+              charcoal: '#1E2421',
+              slate: '#52605B',
+              pink: '#D96B82',
+              pinkLight: '#FFF0F3',
+              pinkBorder: '#E88295',
+              rose: '#BA4961',
+              sage: '#82AF89',
+              sageLight: '#EDF7EF',
+              forest: '#2C4832'
+            }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Playfair Display, Cinzel, and Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #FAF7F5;
+      color: #1E2421;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+    .rose-gradient-text {
+      background: linear-gradient(135deg, #BA4961 0%, #D96B82 50%, #E88295 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .sage-gradient-text {
+      background: linear-gradient(135deg, #2C4832 0%, #4E7A56 50%, #82AF89 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .rose-gradient-bg {
+      background: linear-gradient(135deg, #E88295 0%, #D96B82 60%, #BA4961 100%);
+    }
+    .rose-sage-blend {
+      background: linear-gradient(135deg, #FFF0F3 0%, #FFFFFF 50%, #EDF7EF 100%);
+    }
+    .glass-nav-light {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(232, 130, 149, 0.2);
+    }
+    .glass-card-light {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(232, 130, 149, 0.2);
+    }
+    .glass-card-light:hover {
+      border-color: rgba(217, 107, 130, 0.45);
+      box-shadow: 0 15px 35px -5px rgba(217, 107, 130, 0.12);
+    }
+    .page-view {
+      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+    .page-view.hidden {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-[#F7D6DE] selection:text-[#BA4961]">
+
+  <!-- FLOATING NAVIGATION BAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav-light transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 h-20 md:h-24 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#home" onclick="navigateTo('home'); return false;" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 md:w-11 md:h-11 rounded-full border border-[#D96B82]/40 flex items-center justify-center bg-gradient-to-br from-[#FFF5F7] via-white to-[#EDF7EF] group-hover:border-[#D96B82] transition shadow-xs">
+          <span class="font-cinzel text-[#BA4961] text-lg md:text-xl font-bold">S</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-cinzel tracking-[0.18em] text-base sm:text-lg md:text-xl font-bold text-[#1E2421] group-hover:text-[#BA4961] transition">SLENDER</span>
+          <span class="text-[8.5px] sm:text-[9px] tracking-[0.3em] text-[#52605B] uppercase font-semibold">LADIES SALON · DUBAI</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center space-x-8 lg:space-x-10 text-sm font-medium tracking-wider">
+        <a href="#home" id="nav-link-home" onclick="navigateTo('home'); return false;" class="nav-item text-[#BA4961] font-bold transition uppercase text-xs tracking-[0.2em]">Home</a>
+        <a href="#services" id="nav-link-services" onclick="navigateTo('services'); return false;" class="nav-item text-[#52605B] hover:text-[#BA4961] transition uppercase text-xs tracking-[0.2em]">Services & Pricing</a>
+        <a href="#booking" id="nav-link-booking" onclick="navigateTo('booking'); return false;" class="nav-item text-[#52605B] hover:text-[#BA4961] transition uppercase text-xs tracking-[0.2em]">Gallery & Booking</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-full border border-[#82AF89]/40 text-[#2C4832] bg-[#F2F9F4] hover:bg-[#E3F0E6] text-[11px] uppercase tracking-wider font-semibold">
+          Bur Dubai Map
+        </a>
+        <a href="tel:+97143515745" class="px-3.5 py-2 rounded-full border border-[#E88295]/40 text-[#BA4961] bg-[#FFF0F3] hover:bg-[#FFE3E8] text-[11px] uppercase tracking-wider font-semibold">
+          +971 4 3515745
+        </a>
+        <button onclick="navigateTo('booking');" class="px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.18em] font-bold text-white rose-gradient-bg transition-all duration-300 hover:shadow-[0_6px_25px_rgba(217,107,130,0.35)] active:scale-95">
+          Book Appointment
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2 text-[#1E2421] hover:text-[#BA4961] focus:outline-none" aria-label="Toggle Navigation Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-[#E88295]/20 px-6 py-6 space-y-4 shadow-xl">
+      <a href="#home" onclick="navigateTo('home'); toggleMobileMenu(); return false;" class="block py-2 text-sm uppercase tracking-widest font-bold text-[#1E2421] hover:text-[#BA4961]">Home</a>
+      <a href="#services" onclick="navigateTo('services'); toggleMobileMenu(); return false;" class="block py-2 text-sm uppercase tracking-widest font-bold text-[#1E2421] hover:text-[#BA4961]">Services & Transparent Pricing</a>
+      <a href="#booking" onclick="navigateTo('booking'); toggleMobileMenu(); return false;" class="block py-2 text-sm uppercase tracking-widest font-bold text-[#1E2421] hover:text-[#BA4961]">Gallery & Online Booking</a>
+      <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="block py-2.5 text-center text-xs uppercase tracking-widest font-bold text-[#2C4832] bg-[#EDF7EF] rounded-full border border-[#82AF89]/40">
+        Open Google Maps (Bur Dubai)
+      </a>
+      <button onclick="navigateTo('booking'); toggleMobileMenu();" class="w-full mt-2 py-3 rounded-full text-xs uppercase tracking-widest font-bold text-white rose-gradient-bg shadow-md">
+        Book In-Salon or VIP Home Service
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow pt-24">
+
+    <!-- PAGE 1: HOME PAGE -->
+    <section id="page-home" class="page-view">
+      
+      <!-- Hero Section -->
+      <div class="relative min-h-[85vh] flex items-center justify-center py-16 md:py-24 px-4 sm:px-6 lg:px-12 overflow-hidden bg-gradient-to-b from-[#FAF7F5] via-white to-[#F8FBF9]">
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[450px] bg-[#E88295]/12 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-[500px] h-[380px] bg-[#82AF89]/14 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
+          
+          <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[#D96B82]/30 bg-white/95 shadow-xs backdrop-blur-md">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#BA4961] animate-pulse"></span>
+              <span class="text-[11px] font-bold tracking-[0.22em] uppercase text-[#BA4961]">
+                Bur Dubai · 10+ Years in Dubai · Salon & VIP Home Service
+              </span>
+            </div>
+
+            <div class="space-y-4">
+              <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.12] tracking-tight text-[#1E2421]">
+                Elegance Redefined, <br />
+                <span class="rose-gradient-text italic font-normal">Luxury Delivered.</span>
+              </h1>
+              <p class="text-[#52605B] text-lg sm:text-xl font-normal leading-relaxed max-w-xl mx-auto lg:mx-0">
+                Experience Dubai's premier ladies sanctuary. From French Dr. Renaud facials and Italian Rica waxing to authentic Moroccan hammam and VIP doorstep home service across Dubai.
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <button onclick="navigateTo('booking');" class="w-full sm:w-auto px-8 py-4 rounded-full rose-gradient-bg text-white font-bold text-xs tracking-[0.2em] uppercase transition duration-300 hover:shadow-[0_10px_30px_rgba(217,107,130,0.38)] active:scale-95">
+                Book Studio or Home Service
+              </button>
+              <button onclick="navigateTo('services');" class="w-full sm:w-auto px-7 py-4 rounded-full border-2 border-[#82AF89] text-[#2C4832] font-bold text-xs tracking-[0.2em] uppercase transition duration-300 hover:bg-[#EDF7EF] active:scale-95">
+                View Services & AED Prices
+              </button>
+            </div>
+
+            <!-- Trust Signals -->
+            <div class="pt-8 grid grid-cols-3 gap-6 border-t border-[#E88295]/20 text-center lg:text-left">
+              <div>
+                <p class="font-serif text-2xl sm:text-3xl font-bold text-[#1E2421]">4.8 ★</p>
+                <p class="text-[11px] text-[#52605B] uppercase tracking-wider mt-1">Google Maps (131 Reviews)</p>
+              </div>
+              <div>
+                <p class="font-serif text-2xl sm:text-3xl font-bold text-[#BA4961]">10,000+</p>
+                <p class="text-[11px] text-[#52605B] uppercase tracking-wider mt-1">Ladies Pampered in Dubai</p>
+              </div>
+              <div>
+                <p class="font-serif text-2xl sm:text-3xl font-bold text-[#2C4832]">100%</p>
+                <p class="text-[11px] text-[#52605B] uppercase tracking-wider mt-1">Certified Female Therapists</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Image Showcase -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              <div class="relative rounded-3xl overflow-hidden border-2 border-[#E88295]/30 shadow-2xl bg-white aspect-[4/5] group">
+                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1200&auto=format&fit=crop" alt="Slender Ladies Salon Dubai" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6 p-5 rounded-2xl glass-card-light backdrop-blur-md space-y-2">
+                  <div class="flex items-center justify-between">
+                    <p class="text-xs font-bold text-[#1E2421] uppercase tracking-widest">Bur Dubai Salon & Home Service</p>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#EDF7EF] text-[#2C4832] border border-[#82AF89]/30">Open Today</span>
+                  </div>
+                  <p class="text-xs text-[#52605B] leading-relaxed">Shop No. 6, Majed Bin Sultan Bldg, 22 3A St, Al Souq Al Kabeer (Near Meena Bazaar & Al Ghubaiba)</p>
+                  <div class="flex items-center justify-between pt-2 border-t border-[#E88295]/20 text-[11px]">
+                    <span class="text-[#BA4961] font-semibold">Daily: 09:00 AM – 10:00 PM</span>
+                    <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="text-[#2C4832] font-bold hover:underline">
+                      View Google Map →
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- GOOGLE MAPS SHOWCASE ON HOMEPAGE -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16">
+        <div class="rounded-3xl overflow-hidden bg-white border border-[#E88295]/30 shadow-xl grid grid-cols-1 lg:grid-cols-12">
+          <div class="lg:col-span-6 p-8 sm:p-12 space-y-6">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#EDF7EF] border border-[#82AF89]/40 text-[#2C4832] text-xs font-bold uppercase tracking-wider">
+                Google Maps: 4.8 ★ (131 Reviews)
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FFF0F3] border border-[#D96B82]/30 text-[#BA4961] text-xs font-bold uppercase tracking-wider">
+                Women-Owned Business
+              </span>
+            </div>
+            <h3 class="font-serif text-3xl font-bold text-[#1E2421]">Visit Slender Ladies Salon in Bur Dubai</h3>
+            <p class="text-sm text-[#52605B] leading-relaxed">
+              Located in Shop No. 6, Majed Bin Sultan Building, 22 3A Street, Al Souq Al Kabeer, Al Fahidi, Bur Dubai. Close to Meena Bazaar and Al Ghubaiba Metro Station.
+            </p>
+            <div class="space-y-2 pt-2 text-xs sm:text-sm text-[#52605B]">
+              <p><strong>Address:</strong> 22 3A St - Al Souq Al Kabeer - Al Fahidi - Bur Dubai - Dubai - UAE</p>
+              <p class="text-[#2C4832] font-semibold"><strong>Plus Code:</strong> 777R+FP Dubai - United Arab Emirates</p>
+              <p><strong>Hours:</strong> Daily: 09:00 AM – 10:00 PM (All 7 Days)</p>
+              <p><strong>Landline:</strong> +971 4 351 5745 | <strong>WhatsApp:</strong> +971 50 915 2969</p>
+            </div>
+            <div class="pt-4 flex flex-wrap gap-3">
+              <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-full rose-gradient-bg text-white text-xs uppercase tracking-widest font-bold">
+                Open in Google Maps
+              </a>
+              <a href="https://www.fresha.com/a/slender-ladies-salon-salon-home-service-dubai-slender-ladies-salon-q1ici0ao/all-offer" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-full border border-[#BA4961] text-[#BA4961] bg-[#FFF0F3] text-xs uppercase tracking-widest font-bold">
+                Book on Fresha (5.0★)
+              </a>
+              <a href="https://wa.me/971509152969?text=Hi%20Slender%20Ladies%20Salon%2C%20I%20want%20to%20book%20an%20appointment." target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-full border border-[#82AF89] text-[#2C4832] bg-[#EDF7EF] text-xs uppercase tracking-widest font-bold">
+                WhatsApp Booking
+              </a>
+            </div>
+          </div>
+          <div class="lg:col-span-6 bg-[#EDF7EF] min-h-[350px]">
+            <iframe 
+              title="Slender Ladies Salon Google Maps" 
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.2046467389454!2d55.2892388!3d25.2637375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f435ce061dfe7%3A0x7da898dd390e4fba!2sSlender%20Ladies%20Salon!5e0!3m2!1sen!2sae!4v1730000000000!5m2!1sen!2sae" 
+              width="100%" 
+              height="100%" 
+              style="border:0; min-height: 380px;" 
+              allowfullscreen="" 
+              loading="lazy">
+            </iframe>
+          </div>
+        </div>
+      <!-- TESTIMONIAL SLIDER SECTION -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-16 space-y-10" id="testimonialSliderContainer">
+        
+        <!-- Header & Aggregate Trust -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+          <div class="space-y-3 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0F3] border border-[#D96B82]/30 text-[#BA4961] text-xs font-bold uppercase tracking-widest">
+              <span>★ Verified Client Experiences</span>
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1E2421]">Loved by Dubai Ladies</h2>
+            <p class="text-[#52605B] text-sm sm:text-base leading-relaxed">
+              Real reviews from our Bur Dubai atelier guests and private VIP home service patrons across Dubai.
+            </p>
+          </div>
+
+          <!-- Trust Badge -->
+          <div class="flex items-center gap-4 bg-white p-4 sm:p-5 rounded-2xl border border-[#E88295]/25 shadow-sm self-start md:self-auto">
+            <div class="w-12 h-12 rounded-xl bg-[#EDF7EF] border border-[#82AF89]/40 flex flex-col items-center justify-center text-[#2C4832] flex-shrink-0">
+              <span class="text-base font-bold font-serif leading-none">4.8</span>
+              <span class="text-[10px] text-[#D4AF37] font-bold">★★★★★</span>
+            </div>
+            <div class="text-xs">
+              <div class="flex items-center gap-1 font-bold text-[#1E2421]">
+                <span>131 Google Reviews</span>
+                <span class="text-[#4E7A56]">✓</span>
+              </div>
+              <p class="text-[11px] text-[#6B7C75]">Google Maps Verified Profile</p>
+            </div>
+            <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="ml-2 text-xs font-bold text-[#BA4961] hover:underline">
+              Verify ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- Filter Tabs & Navigation Controls -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E88295]/20 pb-4">
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0" id="testFilterTabs">
+            <button onclick="setTestimonialFilter('all')" id="testTab-all" class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider rose-gradient-bg text-white shadow-sm transition">
+              All Reviews (6)
+            </button>
+            <button onclick="setTestimonialFilter('salon')" id="testTab-salon" class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#52605B] border border-[#E88295]/25 hover:border-[#BA4961] transition">
+              In-Salon (Bur Dubai)
+            </button>
+            <button onclick="setTestimonialFilter('home')" id="testTab-home" class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#52605B] border border-[#82AF89]/40 hover:border-[#2C4832] transition">
+              VIP Home Service
+            </button>
+          </div>
+
+          <div class="flex items-center gap-3 self-end sm:self-auto">
+            <button onclick="toggleTestimonialAuto()" id="testPlayPauseBtn" class="p-2 rounded-full text-[#6B7C75] hover:text-[#1E2421] text-xs font-bold" title="Pause / Play auto-slide">
+              ⏸ Pause
+            </button>
+            <span id="testCounter" class="text-xs font-bold text-[#52605B] font-mono tracking-wider">01 / 06</span>
+            <button onclick="prevTestimonial()" class="w-10 h-10 rounded-full bg-white border border-[#E88295]/40 text-[#1E2421] hover:bg-[#FFF0F3] hover:text-[#BA4961] shadow-xs flex items-center justify-center font-bold text-sm transition active:scale-95" aria-label="Previous">
+              ‹
+            </button>
+            <button onclick="nextTestimonial()" class="w-10 h-10 rounded-full bg-white border border-[#E88295]/40 text-[#1E2421] hover:bg-[#FFF0F3] hover:text-[#BA4961] shadow-xs flex items-center justify-center font-bold text-sm transition active:scale-95" aria-label="Next">
+              ›
+            </button>
+          </div>
+        </div>
+
+        <!-- Showcase Review Card -->
+        <div id="testCard" class="relative rounded-3xl bg-white border border-[#E88295]/30 shadow-xl overflow-hidden p-6 sm:p-10 lg:p-12 transition-all duration-300">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            <div class="lg:col-span-4 flex flex-col items-center text-center space-y-4 border-b lg:border-b-0 lg:border-r border-[#E88295]/20 pb-6 lg:pb-0 lg:pr-8">
+              <div class="relative">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1 bg-gradient-to-tr from-[#BA4961] via-[#D96B82] to-[#82AF89] shadow-lg">
+                  <img id="testAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop" alt="Pooja Mehta" class="w-full h-full rounded-full object-cover">
+                </div>
+                <div id="testTypeIcon" class="absolute -bottom-2 -right-1 w-9 h-9 rounded-full bg-white border border-[#E88295]/40 shadow-md flex items-center justify-center text-[#BA4961] text-xs font-bold">
+                  📍
+                </div>
+              </div>
+              <div class="space-y-1">
+                <h3 id="testName" class="font-serif text-xl sm:text-2xl font-bold text-[#1E2421]">Pooja Mehta</h3>
+                <p id="testRole" class="text-xs text-[#52605B] font-medium">Bur Dubai Resident</p>
+              </div>
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EDF7EF] border border-[#82AF89]/40 text-[#2C4832] text-[11px] font-bold">
+                <span>✓</span>
+                <span id="testSource">Google Verified Review</span>
+              </div>
+              <div class="pt-2 w-full">
+                <span class="text-[10px] uppercase font-bold tracking-wider text-[#6B7C75] block mb-1">Experienced Treatment:</span>
+                <span id="testService" class="inline-block px-3 py-1 rounded-full bg-[#FAF7F5] border border-[#E88295]/25 text-xs font-semibold text-[#BA4961]">
+                  Dr. Renaud Paris Radiance Facial
+                </span>
+              </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-6">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2 text-[#D4AF37] text-base">
+                  <span>★★★★★</span>
+                  <span class="text-xs font-bold text-[#1E2421]">5.0 / 5.0</span>
+                </div>
+                <div id="testDate" class="text-[11px] text-[#6B7C75] font-medium">3 days ago</div>
+              </div>
+
+              <div>
+                <h4 id="testHeadline" class="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-[#1E2421] leading-snug">
+                  “Flawless Dr. Renaud Facial & Most Precise Brows in Meena Bazaar”
+                </h4>
+              </div>
+
+              <p id="testQuote" class="text-sm sm:text-base text-[#52605B] leading-relaxed italic">
+                "Slender Ladies Salon has been my absolute go-to salon in Bur Dubai for over 4 years. Their Dr. Renaud botanical facial left my skin glowing for weeks, and their eyebrow threading is always impeccably symmetrical. Super clean, calm, and honest AED pricing."
+              </p>
+
+              <div class="pt-4 flex flex-wrap items-center gap-4">
+                <button onclick="bookSpecificService(currentTestimonialService)" class="px-6 py-2.5 rounded-full rose-gradient-bg text-white text-xs uppercase tracking-widest font-bold shadow-xs hover:shadow-md transition">
+                  Book This Service
+                </button>
+                <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-full border border-[#82AF89]/50 text-[#2C4832] bg-[#EDF7EF]/50 hover:bg-[#EDF7EF] text-xs uppercase tracking-widest font-bold transition flex items-center gap-1.5">
+                  <span>Verify on Google Maps →</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Thumbnails and Dots -->
+        <div class="flex flex-col items-center gap-4">
+          <div id="testThumbnails" class="flex items-center justify-center gap-2 sm:gap-3 flex-wrap"></div>
+          <div id="testDots" class="flex items-center gap-2"></div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PAGE 2: SERVICES & PRICING -->
+    <section id="page-services" class="page-view hidden py-16 px-4 sm:px-6 lg:px-12 bg-white">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <div class="text-center max-w-2xl mx-auto space-y-4">
+          <span class="text-xs uppercase tracking-[0.3em] text-[#BA4961] font-bold">The Bespoke Menu</span>
+          <h2 class="font-serif text-4xl sm:text-5xl font-bold text-[#1E2421]">Services & Transparent AED Pricing</h2>
+          <p class="text-[#52605B] text-base leading-relaxed">
+            Every ritual is conducted in private chambers with French skincare apothecary, Italian Rica waxes, and single-use sterilized kits, or delivered directly to your Dubai home.
+          </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5">
+          <button onclick="filterServices('all')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold rose-gradient-bg text-white shadow-xs" data-category="all">All Services</button>
+          <button onclick="filterServices('skin')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]" data-category="skin">Facials & Skin</button>
+          <button onclick="filterServices('waxing')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]" data-category="waxing">Waxing & Threading</button>
+          <button onclick="filterServices('hair')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]" data-category="hair">Hair & Keratin</button>
+          <button onclick="filterServices('hammam')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]" data-category="hammam">Moroccan Hammam</button>
+          <button onclick="filterServices('nails')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]" data-category="nails">Spa Nails</button>
+          <button onclick="filterServices('home')" class="service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]" data-category="home">VIP Home Packages</button>
+        </div>
+
+        <!-- Services Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Card 1 -->
+          <div class="service-card rounded-3xl overflow-hidden bg-white border border-[#E88295]/25 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="skin">
+            <div class="relative h-60 overflow-hidden bg-[#FAF7F5]">
+              <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1000&auto=format&fit=crop" alt="Herbal Fruit Clean-Up" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-white/95 text-[#BA4961] shadow-xs">Popular Choice</span>
+              <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/60 text-white backdrop-blur-md">35 Mins</span>
+            </div>
+            <div class="p-8 flex flex-col flex-grow justify-between space-y-6">
+              <div>
+                <div class="flex items-baseline justify-between mb-3">
+                  <h3 class="font-serif text-xl font-bold text-[#1E2421]">Herbal Fruit Clean-Up & Radiant Glow</h3>
+                  <span class="text-2xl font-serif font-bold text-[#BA4961]">AED 55</span>
+                </div>
+                <p class="text-xs text-[#52605B] leading-relaxed">Gentle pore cleansing with cold-pressed natural fruit enzymes, clarifying steam, exfoliation, and a refreshing cucumber soothing masque.</p>
+                <div class="mt-4 pt-4 border-t border-[#E88295]/20 space-y-1.5 text-xs text-[#52605B]">
+                  <p class="font-bold text-[#2C4832] uppercase text-[11px]">Included:</p>
+                  <p>• Pore deep cleansing & steam</p>
+                  <p>• Fruit enzyme scrub exfoliation</p>
+                  <p>• Cucumber & rose water soothing toner</p>
+                </div>
+              </div>
+              <button onclick="bookSpecificService('Herbal Fruit Clean-Up & Radiant Glow')" class="w-full py-3 rounded-full text-xs uppercase tracking-widest font-bold rose-gradient-bg text-white hover:shadow-md transition">Book This Service</button>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="service-card rounded-3xl overflow-hidden bg-white border border-[#E88295]/25 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="skin">
+            <div class="relative h-60 overflow-hidden bg-[#FAF7F5]">
+              <img src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?q=80&w=1000&auto=format&fit=crop" alt="Dr. Renaud Paris Facial" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-white/95 text-[#BA4961] shadow-xs">Signature Facial</span>
+              <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/60 text-white backdrop-blur-md">60 Mins</span>
+            </div>
+            <div class="p-8 flex flex-col flex-grow justify-between space-y-6">
+              <div>
+                <div class="flex items-baseline justify-between mb-3">
+                  <h3 class="font-serif text-xl font-bold text-[#1E2421]">Dr. Renaud Paris Radiance Facial</h3>
+                  <span class="text-2xl font-serif font-bold text-[#BA4961]">AED 160</span>
+                </div>
+                <p class="text-xs text-[#52605B] leading-relaxed">French luxury botanical facial therapy targeting uneven tone and fatigue with organic raspberry extracts and anti-aging peptides.</p>
+                <div class="mt-4 pt-4 border-t border-[#E88295]/20 space-y-1.5 text-xs text-[#52605B]">
+                  <p class="font-bold text-[#2C4832] uppercase text-[11px]">Included:</p>
+                  <p>• French organic milk double cleansing</p>
+                  <p>• Dr. Renaud ultrasonic peel & steam</p>
+                  <p>• Lymphatic drainage massage & mask</p>
+                </div>
+              </div>
+              <button onclick="bookSpecificService('Dr. Renaud Paris Radiance Facial')" class="w-full py-3 rounded-full text-xs uppercase tracking-widest font-bold rose-gradient-bg text-white hover:shadow-md transition">Book This Service</button>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="service-card rounded-3xl overflow-hidden bg-white border border-[#E88295]/25 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="waxing">
+            <div class="relative h-60 overflow-hidden bg-[#FAF7F5]">
+              <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop" alt="Full Face Threading" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-white/95 text-[#BA4961] shadow-xs">Daily Favorite</span>
+              <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/60 text-white backdrop-blur-md">30 Mins</span>
+            </div>
+            <div class="p-8 flex flex-col flex-grow justify-between space-y-6">
+              <div>
+                <div class="flex items-baseline justify-between mb-3">
+                  <h3 class="font-serif text-xl font-bold text-[#1E2421]">Full Face Threading & Eyebrows</h3>
+                  <span class="text-2xl font-serif font-bold text-[#BA4961]">AED 89</span>
+                </div>
+                <p class="text-xs text-[#52605B] leading-relaxed">Hypoallergenic organic thread sculpting for precise eyebrow symmetry, forehead, upper lip, chin, and sides with calming aloe vera finish.</p>
+                <div class="mt-4 pt-4 border-t border-[#E88295]/20 space-y-1.5 text-xs text-[#52605B]">
+                  <p class="font-bold text-[#2C4832] uppercase text-[11px]">Included:</p>
+                  <p>• Cranial mapping for ideal brow curvature</p>
+                  <p>• Full face threading (brows, lip, chin, sides)</p>
+                  <p>• Chilled organic aloe vera compress</p>
+                </div>
+              </div>
+              <button onclick="bookSpecificService('Full Face Threading & Eyebrow Architecture')" class="w-full py-3 rounded-full text-xs uppercase tracking-widest font-bold rose-gradient-bg text-white hover:shadow-md transition">Book This Service</button>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="service-card rounded-3xl overflow-hidden bg-white border border-[#E88295]/25 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="waxing">
+            <div class="relative h-60 overflow-hidden bg-[#FAF7F5]">
+              <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1000&auto=format&fit=crop" alt="Rica Waxing" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-white/95 text-[#BA4961] shadow-xs">Silky Smooth</span>
+              <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/60 text-white backdrop-blur-md">60 Mins</span>
+            </div>
+            <div class="p-8 flex flex-col flex-grow justify-between space-y-6">
+              <div>
+                <div class="flex items-baseline justify-between mb-3">
+                  <h3 class="font-serif text-xl font-bold text-[#1E2421]">Full Body Silky Rica Waxing</h3>
+                  <span class="text-2xl font-serif font-bold text-[#BA4961]">AED 190</span>
+                </div>
+                <p class="text-xs text-[#52605B] leading-relaxed">Italian Rica liposoluble waxing infused with titanium dioxide and zinc oxide for painless, silky-soft results on sensitive skin.</p>
+                <div class="mt-4 pt-4 border-t border-[#E88295]/20 space-y-1.5 text-xs text-[#52605B]">
+                  <p class="font-bold text-[#2C4832] uppercase text-[11px]">Included:</p>
+                  <p>• Full arms, full legs & underarms</p>
+                  <p>• Italian Rica white chocolate formula</p>
+                  <p>• Soothing post-wax argan oil massage</p>
+                </div>
+              </div>
+              <button onclick="bookSpecificService('Full Body Silky Rica Waxing Ritual')" class="w-full py-3 rounded-full text-xs uppercase tracking-widest font-bold rose-gradient-bg text-white hover:shadow-md transition">Book This Service</button>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="service-card rounded-3xl overflow-hidden bg-white border border-[#E88295]/25 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="hair">
+            <div class="relative h-60 overflow-hidden bg-[#FAF7F5]">
+              <img src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?q=80&w=1000&auto=format&fit=crop" alt="Keratin Smoothing" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-white/95 text-[#BA4961] shadow-xs">Frizz-Free</span>
+              <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/60 text-white backdrop-blur-md">120 Mins</span>
+            </div>
+            <div class="p-8 flex flex-col flex-grow justify-between space-y-6">
+              <div>
+                <div class="flex items-baseline justify-between mb-3">
+                  <h3 class="font-serif text-xl font-bold text-[#1E2421]">Organic Keratin & Protein Smoothing</h3>
+                  <span class="text-2xl font-serif font-bold text-[#BA4961]">AED 350</span>
+                </div>
+                <p class="text-xs text-[#52605B] leading-relaxed">Formaldehyde-free deep protein restructuring treatment eliminating 99% of Dubai humidity frizz, lasting up to 6 months.</p>
+                <div class="mt-4 pt-4 border-t border-[#E88295]/20 space-y-1.5 text-xs text-[#52605B]">
+                  <p class="font-bold text-[#2C4832] uppercase text-[11px]">Included:</p>
+                  <p>• Clarifying detox wash</p>
+                  <p>• Nanotechnology protein infusion</p>
+                  <p>• Titanium thermal sealing</p>
+                </div>
+              </div>
+              <button onclick="bookSpecificService('Organic Keratin & Protein Smoothing Therapy')" class="w-full py-3 rounded-full text-xs uppercase tracking-widest font-bold rose-gradient-bg text-white hover:shadow-md transition">Book This Service</button>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="service-card rounded-3xl overflow-hidden bg-white border border-[#E88295]/25 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col group" data-category="home">
+            <div class="relative h-60 overflow-hidden bg-[#FAF7F5]">
+              <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=1000&auto=format&fit=crop" alt="Dubai Glow Queen Package" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              <span class="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-white/95 text-[#BA4961] shadow-xs">Best Value Bundle</span>
+              <span class="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/60 text-white backdrop-blur-md">120 Mins</span>
+            </div>
+            <div class="p-8 flex flex-col flex-grow justify-between space-y-6">
+              <div>
+                <div class="flex items-baseline justify-between mb-3">
+                  <h3 class="font-serif text-xl font-bold text-[#1E2421]">The Dubai Glow Queen Package (Full Combo)</h3>
+                  <span class="text-2xl font-serif font-bold text-[#BA4961]">AED 320</span>
+                </div>
+                <p class="text-xs text-[#52605B] leading-relaxed">Our most requested package (In-Salon or Home Service): Full arms & legs waxing, full face threading, fruit clean-up, and spa mani-pedi.</p>
+                <div class="mt-4 pt-4 border-t border-[#E88295]/20 space-y-1.5 text-xs text-[#52605B]">
+                  <p class="font-bold text-[#2C4832] uppercase text-[11px]">Included:</p>
+                  <p>• Full arms, legs & underarms wax</p>
+                  <p>• Full face threading & brow shaping</p>
+                  <p>• Fruit clean-up & spa mani-pedi</p>
+                </div>
+              </div>
+              <button onclick="bookSpecificService('The Dubai Glow Queen Package (Full Combo)')" class="w-full py-3 rounded-full text-xs uppercase tracking-widest font-bold rose-gradient-bg text-white hover:shadow-md transition">Book This Service</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAGE 3: GALLERY & CONTACT / BOOKING -->
+    <section id="page-booking" class="page-view hidden py-16 px-4 sm:px-6 lg:px-12 bg-[#FAF7F5]">
+      <div class="max-w-7xl mx-auto space-y-20">
+        
+        <!-- SECTION A: 4-COLUMN GALLERY -->
+        <div>
+          <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <span class="text-xs uppercase tracking-[0.3em] text-[#BA4961] font-bold">Visual Portfolio</span>
+            <h2 class="font-serif text-4xl sm:text-5xl font-bold text-[#1E2421]">The Slender Gallery</h2>
+            <p class="text-[#52605B] text-sm leading-relaxed">
+              Curated glimpses of glowing French facials, Russian manicures, and our private Bur Dubai salon suites.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#E88295]/20 h-80 cursor-pointer shadow-md">
+              <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=1000&auto=format&fit=crop" alt="Hair Styling" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition"></div>
+              <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-[#F7D6DE]">Hair Couture</span>
+                <h4 class="font-serif text-lg font-bold text-white mt-1">Precision Layered Styling</h4>
+                <p class="text-xs text-[#E5E7EB] mt-1">Bespoke cuts and bouncy blowout.</p>
+              </div>
+            </div>
+
+            <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#E88295]/20 h-80 cursor-pointer shadow-md">
+              <img src="https://images.unsplash.com/photo-1512290900672-1f023330ff25?q=80&w=1000&auto=format&fit=crop" alt="Skin Care" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition"></div>
+              <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-[#F7D6DE]">Radiant Skin</span>
+                <h4 class="font-serif text-lg font-bold text-white mt-1">Dr. Renaud French Facial</h4>
+                <p class="text-xs text-[#E5E7EB] mt-1">Luminous and deeply hydrated skin.</p>
+              </div>
+            </div>
+
+            <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#E88295]/20 h-80 cursor-pointer shadow-md">
+              <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=1000&auto=format&fit=crop" alt="Nail Art" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition"></div>
+              <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-[#F7D6DE]">Nail Lounge</span>
+                <h4 class="font-serif text-lg font-bold text-white mt-1">Artisan Gel Nail Art</h4>
+                <p class="text-xs text-[#E5E7EB] mt-1">Pastels and Russian cuticle prep.</p>
+              </div>
+            </div>
+
+            <div class="group relative rounded-3xl overflow-hidden bg-white border border-[#E88295]/20 h-80 cursor-pointer shadow-md">
+              <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1000&auto=format&fit=crop" alt="Moroccan Bath" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-85 group-hover:opacity-95 transition"></div>
+              <div class="absolute inset-0 p-6 flex flex-col justify-end">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-[#F7D6DE]">Hammam</span>
+                <h4 class="font-serif text-lg font-bold text-white mt-1">Royal Moroccan Hammam</h4>
+                <p class="text-xs text-[#E5E7EB] mt-1">Traditional black soap scrub.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION B: SMART BOOKING FORM & CONTACT -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start" id="bookingCardAnchor">
+          
+          <div class="lg:col-span-5 space-y-8">
+            <div class="space-y-4">
+              <span class="text-xs uppercase tracking-[0.3em] text-[#BA4961] font-bold">Bur Dubai Concierge</span>
+              <h3 class="font-serif text-3xl sm:text-4xl font-bold text-[#1E2421]">Reserve Salon Chair or Home Service</h3>
+              <p class="text-[#52605B] text-sm leading-relaxed">
+                Visit our private salon chambers in Bur Dubai or book our certified female therapists directly to your Dubai residence or hotel.
+              </p>
+            </div>
+
+            <div class="p-8 rounded-3xl bg-white border border-[#E88295]/25 shadow-lg space-y-6">
+              <div>
+                <h4 class="text-sm font-bold uppercase tracking-wider text-[#1E2421]">Studio Location</h4>
+                <p class="text-xs sm:text-sm text-[#52605B] mt-1">Shop No. 6, Majed Bin Sultan Building, 22 3A St, Al Souq Al Kabeer, Bur Dubai, UAE</p>
+                <p class="text-xs text-[#BA4961] font-medium mt-0.5">Near Meena Bazaar & Al Ghubaiba Metro Station</p>
+                <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="text-xs text-[#2C4832] font-bold underline mt-1.5 inline-block">
+                  Open in Google Maps App →
+                </a>
+              </div>
+
+              <div class="pt-4 border-t border-[#E88295]/20">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-[#1E2421]">Operating Hours</h4>
+                <p class="text-xs sm:text-sm text-[#1E2421] font-semibold mt-1">Daily: 09:00 AM – 10:00 PM</p>
+                <p class="text-xs text-[#52605B]">Open All 7 Days (Bur Dubai Atelier & VIP Home Service)</p>
+              </div>
+
+              <div class="pt-4 border-t border-[#E88295]/20">
+                <h4 class="text-sm font-bold uppercase tracking-wider text-[#1E2421]">Direct Contact</h4>
+                <p class="text-xs sm:text-sm text-[#1E2421] font-semibold mt-1">Landline: <a href="tel:+97143515745" class="hover:underline">+971 4 3515745</a></p>
+                <p class="text-xs sm:text-sm text-[#BA4961] font-bold">WhatsApp: <a href="https://wa.me/971509152969" target="_blank" rel="noopener noreferrer" class="hover:underline">+971 50 915 2969</a></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Smart Booking Form Card -->
+          <div class="lg:col-span-7">
+            <div class="p-8 sm:p-12 rounded-3xl bg-white border-2 border-[#E88295]/30 shadow-2xl relative">
+              
+              <div class="mb-8">
+                <span class="text-[11px] uppercase tracking-[0.25em] text-[#BA4961] font-bold">Direct WhatsApp Confirmation</span>
+                <h3 class="font-serif text-2xl sm:text-3xl font-bold text-[#1E2421] mt-1">Book Your Appointment</h3>
+                <p class="text-xs sm:text-sm text-[#52605B] mt-1">Instant WhatsApp dispatch directly to our Dubai concierge desk.</p>
+              </div>
+
+              <!-- Appointment Type Selector -->
+              <div class="mb-6">
+                <label class="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2">Appointment Type</label>
+                <div class="grid grid-cols-2 gap-3">
+                  <button type="button" id="btnTypeSalon" onclick="setAppointmentType('salon')" class="py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider rose-gradient-bg text-white shadow-md">
+                    In-Salon (Bur Dubai)
+                  </button>
+                  <button type="button" id="btnTypeHome" onclick="setAppointmentType('home')" class="py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider bg-[#FAF7F5] border border-[#82AF89]/40 text-[#52605B] hover:bg-[#EDF7EF]">
+                    VIP Home Service
+                  </button>
+                </div>
+              </div>
+
+              <form id="bookingForm" onsubmit="handleBookingSubmit(event)" class="space-y-6">
+                <div>
+                  <label class="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" for="clientName">
+                    Full Name <span class="text-[#BA4961]">*</span>
+                  </label>
+                  <input type="text" id="clientName" name="clientName" required placeholder="e.g. Sarah Al Mansoori" class="w-full px-5 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition text-sm" />
+                </div>
+
+                <div>
+                  <label class="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" for="clientPhone">
+                    UAE Mobile Number <span class="text-[#BA4961]">*</span>
+                  </label>
+                  <div class="relative">
+                    <span class="absolute left-5 top-3.5 text-sm font-bold text-[#BA4961]">+971</span>
+                    <input type="tel" id="clientPhone" name="clientPhone" required pattern="[0-9]{9,10}" placeholder="50 915 2969" class="w-full pl-16 pr-5 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition text-sm" />
+                  </div>
+                </div>
+
+                <!-- Home address field (visible if Home Service selected) -->
+                <div id="homeAddressContainer" class="hidden p-4 rounded-2xl bg-[#EDF7EF] border border-[#82AF89]/40 space-y-2">
+                  <label class="block text-xs uppercase tracking-widest text-[#2C4832] font-bold" for="clientAddress">
+                    Dubai Address / Villa / Apartment No. <span class="text-[#BA4961]">*</span>
+                  </label>
+                  <input type="text" id="clientAddress" placeholder="e.g. Apartment 402, Downtown Dubai / Villa 12, Al Wasl" class="w-full px-4 py-2.5 rounded-xl bg-white border border-[#82AF89]/40 text-xs text-[#1E2421] focus:outline-none focus:border-[#2C4832]" />
+                </div>
+
+                <div>
+                  <label class="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" for="clientService">
+                    Select Beauty Service <span class="text-[#BA4961]">*</span>
+                  </label>
+                  <select id="clientService" name="clientService" required class="w-full px-5 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition text-sm appearance-none cursor-pointer">
+                    <option value="Herbal Fruit Clean-Up & Radiant Glow" selected>Herbal Fruit Clean-Up & Radiant Glow — AED 55 (35 Mins)</option>
+                    <option value="Dr. Renaud Paris Radiance Facial">Dr. Renaud Paris Radiance Facial — AED 160 (60 Mins)</option>
+                    <option value="24K Gold & Diamond Luxury Polishing Facial">24K Gold & Diamond Luxury Polishing Facial — AED 220 (75 Mins)</option>
+                    <option value="Full Face Threading & Eyebrow Architecture">Full Face Threading & Eyebrow Architecture — AED 89 (30 Mins)</option>
+                    <option value="Full Body Silky Rica Waxing Ritual">Full Body Silky Rica Waxing Ritual — AED 190 (60 Mins)</option>
+                    <option value="Signature Ladies Haircut & Argan Blowdry">Signature Ladies Haircut & Argan Blowdry — AED 120 (45 Mins)</option>
+                    <option value="Organic Keratin & Protein Smoothing Therapy">Organic Keratin & Protein Smoothing Therapy — AED 350 (120 Mins)</option>
+                    <option value="Traditional Royal Moroccan Bath (Hammam)">Traditional Royal Moroccan Bath (Hammam) — AED 210 (60 Mins)</option>
+                    <option value="Classic Spa Manicure & Pedicure Ritual">Classic Spa Manicure & Pedicure Ritual — AED 90 (50 Mins)</option>
+                    <option value="The Dubai Glow Queen Package (Full Combo)">The Dubai Glow Queen Package (Full Combo) — AED 320 (120 Mins)</option>
+                    <option value="VIP Doorstep Home Service Experience">VIP Doorstep Home Service Experience — AED 250 (Custom)</option>
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" for="clientDate">
+                      Preferred Date <span class="text-[#BA4961]">*</span>
+                    </label>
+                    <input type="date" id="clientDate" name="clientDate" required class="w-full px-5 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition text-sm cursor-pointer" />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs uppercase tracking-widest text-[#1E2421] font-bold mb-2" for="clientTime">
+                      Preferred Time Slot <span class="text-[#BA4961]">*</span>
+                    </label>
+                    <select id="clientTime" name="clientTime" required class="w-full px-5 py-3.5 rounded-2xl bg-[#FAF7F5] border border-[#E88295]/30 text-[#1E2421] focus:outline-none focus:border-[#D96B82] focus:ring-2 focus:ring-[#D96B82]/20 transition text-sm appearance-none cursor-pointer">
+                      <option value="10:00 AM">10:00 AM</option>
+                      <option value="11:15 AM" selected>11:15 AM</option>
+                      <option value="12:30 PM">12:30 PM</option>
+                      <option value="02:00 PM">02:00 PM</option>
+                      <option value="03:15 PM">03:15 PM</option>
+                      <option value="04:30 PM">04:30 PM</option>
+                      <option value="05:45 PM">05:45 PM</option>
+                      <option value="07:00 PM">07:00 PM</option>
+                      <option value="08:15 PM">08:15 PM</option>
+                      <option value="09:00 PM">09:00 PM</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- WhatsApp text template preview -->
+                <div class="p-4 rounded-2xl bg-[#EDF7EF] border border-[#82AF89]/40 text-xs">
+                  <div class="flex items-center justify-between text-[#2C4832] font-bold text-[11px] uppercase tracking-wider mb-1">
+                    <span>WhatsApp Dispatch Preview:</span>
+                    <span class="font-mono text-[#3B6343]">wa.me/971509152969</span>
+                  </div>
+                  <p id="whatsappPreviewText" class="text-[#1E2421] font-mono text-[11px] leading-relaxed break-words bg-white p-2.5 rounded-xl border border-[#82AF89]/25">
+                    "Hi Slender Ladies Salon, I want to book an appointment for Herbal Fruit Clean-Up & Radiant Glow on [Date] at 11:15 AM [In-Salon Appointment]."
+                  </p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="confirmBookingBtn" class="w-full py-4 rounded-full rose-gradient-bg text-white font-bold text-xs uppercase tracking-[0.25em] shadow-[0_10px_25px_rgba(217,107,130,0.35)] hover:shadow-[0_15px_35px_rgba(217,107,130,0.5)] active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2">
+                  <span>Confirm Booking via WhatsApp</span>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-[#E88295]/20 bg-[#F9F6F4] py-16 px-4 sm:px-6 lg:px-12 mt-20">
+    <div class="max-w-7xl mx-auto space-y-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+        
+        <div class="space-y-4 md:col-span-2">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full border border-[#D96B82]/40 flex items-center justify-center bg-white shadow-xs">
+              <span class="font-cinzel text-[#BA4961] text-sm font-bold">S</span>
+            </div>
+            <span class="font-cinzel tracking-[0.22em] text-lg font-bold text-[#1E2421]">SLENDER LADIES SALON</span>
+          </div>
+          <p class="text-xs sm:text-sm text-[#52605B] max-w-sm leading-relaxed">
+            Dubai's trusted ladies beauty destination for French Dr. Renaud facials, Italian Rica waxing, Russian nail art, and VIP doorstep home service.
+          </p>
+          <p class="text-xs text-[#BA4961] tracking-wider uppercase font-bold">
+            Shop No. 6, Majed Bin Sultan Bldg, Al Souq Al Kabeer, Bur Dubai, UAE
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          <h5 class="text-xs uppercase tracking-[0.25em] font-bold text-[#1E2421]">Navigation</h5>
+          <ul class="space-y-2 text-xs text-[#52605B]">
+            <li><a href="#home" onclick="navigateTo('home'); return false;" class="hover:text-[#BA4961] transition">The Salon (Home)</a></li>
+            <li><a href="#services" onclick="navigateTo('services'); return false;" class="hover:text-[#BA4961] transition">Services & Transparent AED Prices</a></li>
+            <li><a href="#booking" onclick="navigateTo('booking'); return false;" class="hover:text-[#BA4961] transition">Gallery & Online Booking</a></li>
+            <li><a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="hover:text-[#2C4832] transition font-semibold">Google Maps Directions</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <h5 class="text-xs uppercase tracking-[0.25em] font-bold text-[#1E2421]">Bur Dubai & Concierge</h5>
+          <p class="text-xs text-[#1E2421] font-semibold">Daily: 09:00 AM – 10:00 PM</p>
+          <p class="text-[11px] text-[#2C4832] font-semibold">Plus Code: 777R+FP Dubai - UAE</p>
+          <p class="text-xs text-[#1E2421] font-bold pt-1">Landline: +971 4 351 5745</p>
+          <p class="text-xs text-[#BA4961] font-bold">WhatsApp: +971 50 915 2969</p>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-[#E88295]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#52605B]">
+        <p>© 2026 Slender Ladies Salon. Powered by Pralogics.</p>
+        <div class="flex items-center space-x-6 text-[#52605B]">
+          <a href="https://maps.app.goo.gl/9zSLHT8JEMkvRzLS6" target="_blank" rel="noopener noreferrer" class="hover:text-[#BA4961] transition">Google Maps</a>
+          <a href="https://wa.me/971509152969" target="_blank" rel="noopener noreferrer" class="hover:text-[#BA4961] transition">WhatsApp Desk</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SPA ROUTER & JAVASCRIPT LOGIC -->
+  <script>
+    let currentAppointmentType = 'salon';
+
+    function setAppointmentType(type) {
+      currentAppointmentType = type;
+      const btnSalon = document.getElementById('btnTypeSalon');
+      const btnHome = document.getElementById('btnTypeHome');
+      const addressBox = document.getElementById('homeAddressContainer');
+
+      if (type === 'salon') {
+        btnSalon.className = 'py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider rose-gradient-bg text-white shadow-md';
+        btnHome.className = 'py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider bg-[#FAF7F5] border border-[#82AF89]/40 text-[#52605B] hover:bg-[#EDF7EF]';
+        if (addressBox) addressBox.classList.add('hidden');
+      } else {
+        btnHome.className = 'py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider bg-[#2C4832] text-white shadow-md';
+        btnSalon.className = 'py-3 px-4 rounded-2xl text-xs font-bold uppercase tracking-wider bg-[#FAF7F5] border border-[#E88295]/30 text-[#52605B] hover:bg-[#FFF0F3]';
+        if (addressBox) addressBox.classList.remove('hidden');
+      }
+      updateWhatsappPreview();
+    }
+
+    function navigateTo(pageId) {
+      const pages = ['home', 'services', 'booking'];
+      pages.forEach(id => {
+        const el = document.getElementById('page-' + id);
+        const link = document.getElementById('nav-link-' + id);
+        if (el) {
+          if (id === pageId) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        }
+        if (link) {
+          if (id === pageId) {
+            link.classList.remove('text-[#52605B]');
+            link.classList.add('text-[#BA4961]', 'font-bold');
+          } else {
+            link.classList.remove('text-[#BA4961]', 'font-bold');
+            link.classList.add('text-[#52605B]');
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      if (menu) {
+        menu.classList.toggle('hidden');
+      }
+    }
+
+    function bookSpecificService(serviceName) {
+      navigateTo('booking');
+      setTimeout(() => {
+        const select = document.getElementById('clientService');
+        if (select) {
+          for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value.includes(serviceName) || select.options[i].text.includes(serviceName)) {
+              select.selectedIndex = i;
+              break;
+            }
+          }
+          updateWhatsappPreview();
+        }
+        const anchor = document.getElementById('bookingCardAnchor');
+        if (anchor) {
+          anchor.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+
+    function filterServices(category) {
+      const cards = document.querySelectorAll('.service-card');
+      const buttons = document.querySelectorAll('.service-tab-btn');
+      
+      buttons.forEach(btn => {
+        if (btn.getAttribute('data-category') === category) {
+          btn.className = 'service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold rose-gradient-bg text-white shadow-xs';
+        } else {
+          btn.className = 'service-tab-btn px-5 py-2.5 rounded-full text-xs uppercase tracking-[0.16em] font-semibold border border-[#82AF89]/40 text-[#2C4832] bg-white hover:bg-[#EDF7EF]';
+        }
+      });
+
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const dateInput = document.getElementById('clientDate');
+      if (dateInput) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const yyyy = tomorrow.getFullYear();
+        const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
+        const dd = String(tomorrow.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+        dateInput.min = `${yyyy}-${mm}-${dd}`;
+      }
+
+      ['clientName', 'clientPhone', 'clientService', 'clientDate', 'clientTime', 'clientAddress'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', updateWhatsappPreview);
+          el.addEventListener('change', updateWhatsappPreview);
+        }
+      });
+
+      updateWhatsappPreview();
+      initTestimonials();
+    });
+
+    const testimonialsData = [
+      {
+        id: 'test-1',
+        name: 'Pooja Mehta',
+        role: 'Bur Dubai Resident',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop',
+        rating: 5,
+        headline: 'Flawless Dr. Renaud Facial & Most Precise Brows in Meena Bazaar',
+        quote: 'Slender Ladies Salon has been my absolute go-to salon in Bur Dubai for over 4 years. Their Dr. Renaud botanical facial left my skin glowing for weeks, and their eyebrow threading is always impeccably symmetrical. Super clean, calm, and honest AED pricing.',
+        serviceUsed: 'Dr. Renaud Paris Radiance Facial',
+        source: 'Google Verified Review',
+        date: '3 days ago',
+        type: 'salon'
+      },
+      {
+        id: 'test-2',
+        name: 'Fatima Al-Nuaimi',
+        role: 'Downtown Dubai',
+        avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+        rating: 5,
+        headline: 'Punctual, Spotless & Five-Star VIP Home Service for My Bridal Prep',
+        quote: 'I booked their VIP Home Service for my bridal preps in Downtown Dubai. Two certified therapists arrived right on time with sterilized instruments, disposable bed covers, and delivered the smoothest Rica wax and manicure. Zero stress, pure five-star luxury.',
+        serviceUsed: 'The Dubai Glow Queen Package (Full Combo)',
+        source: 'Google Verified Review',
+        date: '1 week ago',
+        type: 'home'
+      },
+      {
+        id: 'test-3',
+        name: 'Elena Rostova',
+        role: 'Dubai Marina Expat',
+        avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop',
+        rating: 5,
+        headline: 'The Keratin Smoothing Completely Rescued My Frizzy Hair',
+        quote: 'Dubai humidity used to destroy my hair daily. Fatima did the organic keratin smoothing treatment and now my hair dries pin-straight and silky soft in 10 minutes flat! No harsh chemical fumes either. Worth every single dirham.',
+        serviceUsed: 'Organic Keratin & Protein Smoothing Therapy',
+        source: 'Fresha 5.0★ Review',
+        date: '2 weeks ago',
+        type: 'salon'
+      },
+      {
+        id: 'test-4',
+        name: 'Zainab Al-Hashemi',
+        role: 'Jumeirah 1 Regular',
+        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop',
+        rating: 5,
+        headline: 'Authentic Moroccan Hammam That Rivals Luxury 5-Star Hotel Spas',
+        quote: 'Their traditional Moroccan bath with eucalyptus Beldi soap and Kessa scrub is therapeutic heaven. Leila is so attentive and respectful. You walk out with baby-soft skin and deep tranquility. A true hidden sanctuary.',
+        serviceUsed: 'Traditional Royal Moroccan Bath (Hammam)',
+        source: 'Google Verified Review',
+        date: 'October 2026',
+        type: 'salon'
+      },
+      {
+        id: 'test-5',
+        name: 'Sarah Jenkins',
+        role: 'Business Bay Executive',
+        avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop',
+        rating: 5,
+        headline: 'Long-Lasting Russian Gel Nails & Relaxing Lavender Pedicure',
+        quote: 'After work, having an unhurried spa manicure and pedicure here is pure joy. My gel polish stayed chip-free for over 3 weeks. The therapists take their time with cuticle care and never rush like other Dubai salons.',
+        serviceUsed: 'Classic Spa Manicure & Pedicure Ritual',
+        source: 'Fresha 5.0★ Review',
+        date: 'October 2026',
+        type: 'salon'
+      },
+      {
+        id: 'test-6',
+        name: 'Ananya Krishnan',
+        role: 'Al Fahidi Local Resident',
+        avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?q=80&w=600&auto=format&fit=crop',
+        rating: 5,
+        headline: '24K Gold Facial Gave Me the Ultimate Festive Glow',
+        quote: 'I booked the 24K Gold & Diamond Facial before Diwali celebrations. The acupressure face and shoulder massage melted away all my fatigue, and the natural glow in photos was incredible. Everyone asked me where I got it done!',
+        serviceUsed: '24K Gold & Diamond Luxury Polishing Facial',
+        source: 'Google Verified Review',
+        date: 'September 2026',
+        type: 'salon'
+      }
+    ];
+
+    let currentTestimonialFilter = 'all';
+    let currentTestimonialIndex = 0;
+    let isTestimonialAutoActive = true;
+    let testimonialTimer = null;
+    let currentTestimonialService = 'Dr. Renaud Paris Radiance Facial';
+
+    function getFilteredTestimonials() {
+      if (currentTestimonialFilter === 'all') return testimonialsData;
+      return testimonialsData.filter(t => t.type === currentTestimonialFilter);
+    }
+
+    function renderTestimonialUI() {
+      const list = getFilteredTestimonials();
+      if (!list.length) return;
+      if (currentTestimonialIndex >= list.length) currentTestimonialIndex = 0;
+      
+      const item = list[currentTestimonialIndex];
+      currentTestimonialService = item.serviceUsed;
+
+      document.getElementById('testAvatar').src = item.avatar;
+      document.getElementById('testAvatar').alt = item.name;
+      document.getElementById('testTypeIcon').textContent = item.type === 'home' ? '🏡' : '📍';
+      document.getElementById('testName').textContent = item.name;
+      document.getElementById('testRole').textContent = item.role;
+      document.getElementById('testSource').textContent = item.source;
+      document.getElementById('testService').textContent = item.serviceUsed;
+      document.getElementById('testDate').textContent = item.date;
+      document.getElementById('testHeadline').textContent = `“${item.headline}”`;
+      document.getElementById('testQuote').textContent = `"${item.quote}"`;
+      document.getElementById('testCounter').textContent = `${String(currentTestimonialIndex + 1).padStart(2, '0')} / ${String(list.length).padStart(2, '0')}`;
+
+      // Render thumbnails
+      const thumbsContainer = document.getElementById('testThumbnails');
+      if (thumbsContainer) {
+        thumbsContainer.innerHTML = list.map((t, idx) => `
+          <button onclick="jumpToTestimonial(${idx})" class="flex items-center gap-2 px-2.5 py-1.5 rounded-full transition-all cursor-pointer ${idx === currentTestimonialIndex ? 'bg-white border-2 border-[#BA4961] shadow-md scale-105' : 'bg-white/70 border border-[#E88295]/25 opacity-75 hover:opacity-100'}">
+            <img src="${t.avatar}" alt="${t.name}" class="w-6 h-6 rounded-full object-cover">
+            <span class="text-[11px] font-semibold text-[#52605B] hidden md:inline">${t.name.split(' ')[0]}</span>
+          </button>
+        `).join('');
+      }
+
+      // Render dots
+      const dotsContainer = document.getElementById('testDots');
+      if (dotsContainer) {
+        dotsContainer.innerHTML = list.map((_, idx) => `
+          <button onclick="jumpToTestimonial(${idx})" class="h-2 rounded-full transition-all ${idx === currentTestimonialIndex ? 'w-8 bg-[#BA4961]' : 'w-2 bg-[#E88295]/40'}"></button>
+        `).join('');
+      }
+    }
+
+    function setTestimonialFilter(type) {
+      currentTestimonialFilter = type;
+      currentTestimonialIndex = 0;
+      ['all', 'salon', 'home'].forEach(t => {
+        const btn = document.getElementById('testTab-' + t);
+        if (btn) {
+          if (t === type) {
+            btn.className = 'px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider rose-gradient-bg text-white shadow-sm transition';
+          } else {
+            btn.className = 'px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-[#52605B] border border-[#E88295]/25 hover:border-[#BA4961] transition';
+          }
+        }
+      });
+      renderTestimonialUI();
+    }
+
+    function nextTestimonial() {
+      const list = getFilteredTestimonials();
+      currentTestimonialIndex = (currentTestimonialIndex + 1) % list.length;
+      renderTestimonialUI();
+    }
+
+    function prevTestimonial() {
+      const list = getFilteredTestimonials();
+      currentTestimonialIndex = (currentTestimonialIndex === 0 ? list.length - 1 : currentTestimonialIndex - 1);
+      renderTestimonialUI();
+    }
+
+    function jumpToTestimonial(idx) {
+      currentTestimonialIndex = idx;
+      renderTestimonialUI();
+    }
+
+    function toggleTestimonialAuto() {
+      isTestimonialAutoActive = !isTestimonialAutoActive;
+      const btn = document.getElementById('testPlayPauseBtn');
+      if (btn) {
+        btn.textContent = isTestimonialAutoActive ? '⏸ Pause' : '▶ Play';
+      }
+      if (isTestimonialAutoActive) {
+        startTestimonialTimer();
+      } else if (testimonialTimer) {
+        clearInterval(testimonialTimer);
+      }
+    }
+
+    function startTestimonialTimer() {
+      if (testimonialTimer) clearInterval(testimonialTimer);
+      testimonialTimer = setInterval(() => {
+        if (isTestimonialAutoActive) {
+          nextTestimonial();
+        }
+      }, 5500);
+    }
+
+    function initTestimonials() {
+      renderTestimonialUI();
+      startTestimonialTimer();
+
+      const container = document.getElementById('testimonialSliderContainer');
+      if (container) {
+        container.addEventListener('mouseenter', () => {
+          if (testimonialTimer) clearInterval(testimonialTimer);
+        });
+        container.addEventListener('mouseleave', () => {
+          if (isTestimonialAutoActive) startTestimonialTimer();
+        });
+      }
+    }
+
+
+    function updateWhatsappPreview() {
+      const service = document.getElementById('clientService')?.value || 'Herbal Fruit Clean-Up & Radiant Glow';
+      const date = document.getElementById('clientDate')?.value || '[Date]';
+      const time = document.getElementById('clientTime')?.value || '11:15 AM';
+      const typeText = currentAppointmentType === 'home' ? ' [VIP Home Service]' : ' [In-Salon Appointment]';
+      const preview = document.getElementById('whatsappPreviewText');
+      if (preview) {
+        preview.textContent = `"Hi Slender Ladies Salon, I want to book an appointment for ${service} on ${date} at ${time}${typeText}."`;
+      }
+    }
+
+    function handleBookingSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('clientName').value.trim();
+      const phone = document.getElementById('clientPhone').value.trim();
+      const service = document.getElementById('clientService').value;
+      const date = document.getElementById('clientDate').value;
+      const time = document.getElementById('clientTime').value;
+      const address = document.getElementById('clientAddress')?.value.trim() || '';
+
+      if (!name || !phone || !service || !date || !time) {
+        alert('Please fill out all required fields.');
+        return;
+      }
+
+      if (currentAppointmentType === 'home' && !address) {
+        alert('Please provide your Dubai address / location for VIP Home Service.');
+        return;
+      }
+
+      const typeText = currentAppointmentType === 'home' ? ' [VIP Home Service]' : ' [In-Salon Appointment]';
+      let message = `Hi Slender Ladies Salon, I want to book an appointment for ${service} on ${date} at ${time}${typeText}.\nName: ${name}\nPhone: +971 ${phone}`;
+      if (currentAppointmentType === 'home' && address) {
+        message += `\nDubai Address: ${address}`;
+      }
+
+      const whatsappUrl = `https://wa.me/971509152969?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
